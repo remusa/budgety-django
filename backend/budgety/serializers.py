@@ -5,7 +5,7 @@ from .models import Expense, Income
 
 
 class ExpenseSerializer(serializers.HyperlinkedModelSerializer):
-    owner = serializers.ReadOnlyField(source="user.username")
+    owner = serializers.ReadOnlyField(source="owner.username")
 
     class Meta:
         model = Expense
@@ -13,7 +13,7 @@ class ExpenseSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class IncomeSerializer(serializers.HyperlinkedModelSerializer):
-    owner = serializers.ReadOnlyField(source="user.username")
+    owner = serializers.ReadOnlyField(source="owner.username")
 
     class Meta:
         model = Income

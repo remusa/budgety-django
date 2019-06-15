@@ -7,7 +7,7 @@ from rest_framework.reverse import reverse
 
 from .models import Expense, Income
 from .serializers import ExpenseSerializer, IncomeSerializer, UserSerializer
-from .permissions import IsOwnerOrReject
+from .permissions import IsOwner
 
 
 @api_view(["GET"])
@@ -24,7 +24,7 @@ def api_root(request, format=None):
 class ExpenseList(generics.ListCreateAPIView):
     queryset = Expense.objects.all()
     serializer_class = ExpenseSerializer
-    permission_classes = (permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReject)
+    permission_classes = (permissions.IsAuthenticated, IsOwner)
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
@@ -33,13 +33,13 @@ class ExpenseList(generics.ListCreateAPIView):
 class ExpenseDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Expense.objects.all()
     serializer_class = ExpenseSerializer
-    permission_classes = (permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReject)
+    permission_classes = (permissions.IsAuthenticated, IsOwner)
 
 
 class IncomeList(generics.ListCreateAPIView):
     queryset = Income.objects.all()
     serializer_class = IncomeSerializer
-    permission_classes = (permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReject)
+    permission_classes = (permissions.IsAuthenticated, IsOwner)
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
@@ -48,14 +48,16 @@ class IncomeList(generics.ListCreateAPIView):
 class IncomeDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Income.objects.all()
     serializer_class = IncomeSerializer
-    permission_classes = (permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReject)
+    permission_classes = (permissions.IsAuthenticated, IsOwner)
 
 
 class UserList(generics.ListAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
+    permission_classes = (permissions.IsAuthenticated, IsOwner)
 
 
 class UserDetail(generics.RetrieveAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
+    permission_classes = (permissions.IsAuthenticated, IsOwner)
