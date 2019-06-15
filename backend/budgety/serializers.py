@@ -4,26 +4,33 @@ from rest_framework import serializers
 from .models import Expense, Income
 
 
-class ExpenseSerializer(serializers.ModelSerializer):
+class ExpenseSerializer(serializers.HyperlinkedModelSerializer):
     owner = serializers.ReadOnlyField(source="user.username")
 
     class Meta:
         model = Expense
-        fields = ("id", "total", "category", "note", "date", "owner")
+        fields = ("url", "id", "total", "category", "note", "date", "owner")
 
 
-class IncomeSerializer(serializers.ModelSerializer):
+class IncomeSerializer(serializers.HyperlinkedModelSerializer):
     owner = serializers.ReadOnlyField(source="user.username")
 
     class Meta:
         model = Income
-        fields = ("id", "total", "category", "note", "date", "owner")
+        fields = ("url", "id", "total", "category", "note", "date", "owner")
 
 
-class UserSerializer(serializers.ModelSerializer):
-    expenses = serializers.PrimaryKeyRelatedField(many=True, queryset=Expense.objects.all())
-    incomes = serializers.PrimaryKeyRelatedField(many=True, queryset=Income.objects.all())
+class UserSerializer(serializers.HyperlinkedModelSerializer):
+    expenses = serializers.HyperlinkedRelatedField(
+        many=True, view_name="expense-detail", read_only=True
+    )
+    incomes = serializers.HyperlinkedRelatedField(
+        many=True, view_name="income-detail", read_only=True
+    )
+
+    # expenses = serializers.HyperlinkedRelatedField(many=True, queryset=Expense.objects.all())
+    # incomes = serializers.HyperlinkedRelatedField(many=True, queryset=Income.objects.all())
 
     class Meta:
         model = User
-        fields = ("id", "username", "expenses", "incomes")
+        fields = ("url", "id", "username", "expenses", "incomes")

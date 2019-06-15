@@ -1,11 +1,15 @@
 from django.urls import include, path
 from rest_framework.urlpatterns import format_suffix_patterns
+from rest_framework.schemas import get_schema_view
 
 
 from budgety import views
 
+schema_view = get_schema_view(title="Budgety API")
+
 
 urlpatterns = [
+    path("schema/", schema_view),
     path("expenses/", views.ExpenseList.as_view(), name="expense-list"),
     path("expenses/<int:pk>", views.ExpenseDetail.as_view(), name="expense-detail"),
     path("incomes/", views.IncomeList.as_view(), name="income-list"),
