@@ -11,6 +11,7 @@ djangorestframework = "*"
 coreapi = "*"
 pyyaml = "*"
 coreapi-cli = "*"
+django-cors-headers = "*"
 
 [requires]
 python_version = "3.6"

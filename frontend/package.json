@@ -1,0 +1,317 @@
+{
+    "name": "parcel-react",
+    "version": "1.0.1",
+    "description": "React + Parcel boilerplate",
+    "main": "index.js",
+    "//": {
+        "comment": {
+            "build": "NODE_ENV=production parcel build dist/index.html --public-url ./"
+        }
+    },
+    "scripts": {
+        "start": "NODE_ENV=development parcel public/index.html --open",
+        "build": "NODE_ENV=production parcel build public/index.html -d build",
+        "test:watch": "jest --watch",
+        "test": "npm run test:watch",
+        "lint": "eslint \"src/**/*.{js,jsx}\"",
+        "lint:quiet": "eslint \"src/**/*.{js,jsx}\" --quiet",
+        "lint:fix": "eslint \"src/**/*.{js,jsx}\" --fix && echo 'Lint complete.'",
+        "lint:fix2": "eslint . --fix && echo 'Lint complete.'",
+        "format": "prettier \"src/**/*.{js,html}\" --write && echo 'Format complete.'",
+        "dev": "export NODE_ENV=development && npm start",
+        "deploy": "npm run build && npm run firebase:deploy",
+        "firebase:login": "firebase login",
+        "firebase:init": "firebase init",
+        "firebase:deploy": "firebase deploy"
+    },
+    "dependencies": {
+        "normalize.css": "^8.0.1",
+        "react": "^16.8.6",
+        "react-dom": "^16.8.6",
+        "react-router-dom": "^5.0.1",
+        "styled-components": "^4.3.1"
+    },
+    "devDependencies": {
+        "@babel/core": "^7.4.5",
+        "@babel/preset-env": "^7.4.5",
+        "@babel/preset-react": "^7.0.0",
+        "@testing-library/react": "^8.0.1",
+        "autoprefixer": "^9.6.0",
+        "babel-eslint": "^10.0.1",
+        "babel-jest": "^24.8.0",
+        "babel-preset-env": "^1.7.0",
+        "babel-preset-react": "^6.24.1",
+        "eslint": "^5.16.0",
+        "eslint-config-airbnb": "^17.1.0",
+        "eslint-config-prettier": "^5.0.0",
+        "eslint-config-wesbos": "0.0.19",
+        "eslint-plugin-html": "^5.0.5",
+        "eslint-plugin-import": "^2.17.3",
+        "eslint-plugin-jsx-a11y": "^6.2.1",
+        "eslint-plugin-prettier": "^3.1.0",
+        "eslint-plugin-react": "^7.13.0",
+        "eslint-plugin-react-hooks": "^1.6.0",
+        "jest": "^24.8.0",
+        "majestic": "^1.6.0",
+        "node-sass": "^4.12.0",
+        "parcel-bundler": "^1.12.3",
+        "prettier": "^1.18.2",
+        "prop-types": "^15.7.2",
+        "react-test-renderer": "^16.8.6",
+        "sass": "^1.21.0"
+    },
+    "jest": {
+        "testPathIgnorePatterns": [
+            "<rootDir>/node_modules/"
+        ],
+        "setupFilesAfterEnv": [
+            "@testing-library/react/cleanup-after-each"
+        ]
+    },
+    "postcss": {
+        "modules": false,
+        "plugins": {
+            "autoprefixer": {
+                "overrideBrowserslist": [
+                    ">1%",
+                    "last 4 versions",
+                    "Firefox ESR",
+                    "not ie < 9"
+                ],
+                "flexbox": "no-2009"
+            }
+        }
+    },
+    "eslintConfig": {
+        "extends": [
+            "eslint:recommended",
+            "plugin:import/errors",
+            "plugin:react/recommended",
+            "plugin:jsx-a11y/recommended",
+            "airbnb",
+            "prettier",
+            "prettier/react",
+            "plugin:prettier/recommended",
+            "wesbos"
+        ],
+        "plugins": [
+            "prettier",
+            "import",
+            "react-hooks",
+            "jsx-a11y"
+        ],
+        "parser": "babel-eslint",
+        "parserOptions": {
+            "ecmaVersion": 2019,
+            "sourceType": "module",
+            "ecmaFeatures": {
+                "experimentalObjectRestSpread": true,
+                "impliedStrict": true,
+                "classes": true,
+                "jsx": true
+            }
+        },
+        "env": {
+            "es6": true,
+            "commonjs": true,
+            "browser": true,
+            "node": true,
+            "jest": true
+        },
+        "rules": {
+            "indent": [
+                "error",
+                4
+            ],
+            "no-debugger": 0,
+            "no-alert": 0,
+            "no-await-in-loop": 0,
+            "no-restricted-syntax": [
+                2,
+                "ForInStatement",
+                "LabeledStatement",
+                "WithStatement"
+            ],
+            "no-unused-vars": [
+                1,
+                {
+                    "ignoreSiblings": true,
+                    "argsIgnorePattern": "res|done|next|^err"
+                }
+            ],
+            "prefer-const": [
+                "error",
+                {
+                    "destructuring": "all"
+                }
+            ],
+            "arrow-body-style": [
+                2,
+                "as-needed"
+            ],
+            "no-unused-expressions": [
+                2,
+                {
+                    "allowTaggedTemplates": true
+                }
+            ],
+            "no-param-reassign": [
+                2,
+                {
+                    "props": false
+                }
+            ],
+            "no-var": 1,
+            "prefer-template": 1,
+            "no-console": 0,
+            "import/prefer-default-export": 0,
+            "import": 0,
+            "func-names": 0,
+            "space-before-function-paren": 0,
+            "comma-dangle": 0,
+            "max-len": 0,
+            "import/extensions": 0,
+            "no-underscore-dangle": 0,
+            "consistent-return": 0,
+            "react/display-name": 1,
+            "react/no-array-index-key": 0,
+            "react/react-in-jsx-scope": 0,
+            "react/prefer-stateless-function": 0,
+            "react/forbid-prop-types": 0,
+            "react/no-unescaped-entities": 0,
+            "jsx-a11y/accessible-emoji": 0,
+            "react/require-default-props": 0,
+            "react-hooks/rules-of-hooks": "error",
+            "react-hooks/exhaustive-deps": "warn",
+            "react/jsx-filename-extension": [
+                1,
+                {
+                    "extensions": [
+                        ".js",
+                        ".jsx"
+                    ]
+                }
+            ],
+            "radix": 0,
+            "no-shadow": [
+                2,
+                {
+                    "hoist": "all",
+                    "allow": [
+                        "resolve",
+                        "reject",
+                        "done",
+                        "next",
+                        "err",
+                        "error"
+                    ]
+                }
+            ],
+            "quotes": [
+                2,
+                "single",
+                {
+                    "avoidEscape": true,
+                    "allowTemplateLiterals": true
+                }
+            ],
+            "jsx-a11y/href-no-hash": "off",
+            "jsx-a11y/anchor-is-valid": [
+                "warn",
+                {
+                    "aspects": [
+                        "invalidHref"
+                    ]
+                }
+            ],
+            "prettier/prettier": [
+                "error",
+                {
+                    "disableLanguages": [
+                        "markdown",
+                        "md"
+                    ],
+                    "eslintIntegration": true,
+                    "stylelintIntegration": false,
+                    "trailingComma": "es5",
+                    "singleQuote": true,
+                    "printWidth": 100,
+                    "semi": false,
+                    "jsxSingleQuote": true,
+                    "tabWidth": 4,
+                    "useTabs": false,
+                    "jsxBracketSameLine": false,
+                    "endOfLine": "auto"
+                }
+            ]
+        },
+        "settings": {
+            "react": {
+                "version": "detect"
+            }
+        }
+    },
+    "babel": {
+        "presets": [
+            "@babel/preset-env",
+            "@babel/preset-react"
+        ],
+        "env": {
+            "development": {
+                "plugins": [
+                    [
+                        "styled-components",
+                        {
+                            "ssr": true,
+                            "displayName": true
+                        }
+                    ]
+                ]
+            },
+            "production": {
+                "plugins": [
+                    [
+                        "styled-components",
+                        {
+                            "ssr": true,
+                            "displayName": true
+                        }
+                    ]
+                ]
+            },
+            "test": {
+                "plugins": [
+                    [
+                        "styled-components",
+                        {
+                            "ssr": true,
+                            "displayName": true
+                        }
+                    ]
+                ]
+            }
+        }
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/remusa/budgety.git"
+    },
+    "keywords": [
+        "parcel",
+        "react",
+        "budget",
+        "tracker"
+    ],
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/remusa/budgety/issues"
+    },
+    "homepage": "https://github.com/remusa/budgety#readme",
+    "browserslist": [
+        ">0.2%",
+        "not dead",
+        "not ie <= 11",
+        "not op_mini all"
+    ]
+}

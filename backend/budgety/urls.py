@@ -9,13 +9,13 @@ schema_view = get_schema_view(title="Budgety API")
 
 
 urlpatterns = [
-    path("schema/", schema_view),
-    path("expenses/", views.ExpenseList.as_view(), name="expense-list"),
-    path("expenses/<int:pk>", views.ExpenseDetail.as_view(), name="expense-detail"),
-    path("incomes/", views.IncomeList.as_view(), name="income-list"),
-    path("incomes/<int:pk>", views.IncomeDetail.as_view(), name="income-detail"),
-    path("users/", views.UserList.as_view(), name="user-list"),
-    path("users/<int:pk>/", views.UserDetail.as_view(), name="user-detail"),
+    path("api/schema/", schema_view),
+    path("api/expenses/", views.ExpenseList.as_view(), name="expense-list"),
+    path("api/expenses/<int:pk>", views.ExpenseDetail.as_view(), name="expense-detail"),
+    path("api/incomes/", views.IncomeList.as_view(), name="income-list"),
+    path("api/incomes/<int:pk>", views.IncomeDetail.as_view(), name="income-detail"),
+    path("api/users/", views.UserList.as_view(), name="user-list"),
+    path("api/users/<int:pk>/", views.UserDetail.as_view(), name="user-detail"),
     path("", views.api_root),
 ]
 

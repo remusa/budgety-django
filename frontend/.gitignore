@@ -1,13 +1,14 @@
-.env
 
-.vscode/
+# Created by https://www.gitignore.io/api/node
+# Edit at https://www.gitignore.io/?templates=node
 
-node_modules/
+*.lnk
 
 dist/
 build/
 .netlify/
 .firebase/
+.firebaserc
 
 ### Node ###
 # Logs

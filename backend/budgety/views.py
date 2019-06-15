@@ -4,10 +4,9 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.reverse import reverse
 
-
 from .models import Expense, Income
-from .serializers import ExpenseSerializer, IncomeSerializer, UserSerializer
 from .permissions import IsOwner
+from .serializers import ExpenseSerializer, IncomeSerializer, UserSerializer
 
 
 @api_view(["GET"])
@@ -22,49 +21,40 @@ def api_root(request, format=None):
 
 
 class ExpenseList(generics.ListCreateAPIView):
-    # Expense.objects.all()
+    queryset = Expense.objects.all()
     serializer_class = ExpenseSerializer
     permission_classes = (permissions.IsAuthenticated, IsOwner)
 
-    def get_queryset(self):
-        user = self.request.user
-        return Expense.objects.filter(owner=user)
+    # def get_queryset(self):
+    #     user = self.request.user
+    #     return Expense.objects.filter(owner=user)
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
 
 
 class ExpenseDetail(generics.RetrieveUpdateDestroyAPIView):
-    # queryset = Expense.objects.all()
+    queryset = Expense.objects.all()
     serializer_class = ExpenseSerializer
     permission_classes = (permissions.IsAuthenticated, IsOwner)
 
-    def get_queryset(self):
-        user = self.request.user
-        return Expense.objects.filter(owner=user)
-
 
 class IncomeList(generics.ListCreateAPIView):
-    # queryset = Income.objects.all()
-    serializer_class = IncomeSerializer
-    permission_classes = (permissions.IsAuthenticated, IsOwner)
-
-    # def get_queryset(self):
-    #     user = self.request.user
-    #     return Income.objects.filter(owner=user)
-
-    def perform_create(self, serializer):
-        serializer.save(owner=self.request.user)
-
-
-class IncomeDetail(generics.RetrieveUpdateDestroyAPIView):
-    # queryset = Income.objects.all()
     serializer_class = IncomeSerializer
     permission_classes = (permissions.IsAuthenticated, IsOwner)
 
     def get_queryset(self):
         user = self.request.user
         return Income.objects.filter(owner=user)
+
+    def perform_create(self, serializer):
+        serializer.save(owner=self.request.user)
+
+
+class IncomeDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Income.objects.all()
+    serializer_class = IncomeSerializer
+    permission_classes = (permissions.IsAuthenticated, IsOwner)
 
 
 class UserList(generics.ListAPIView):
