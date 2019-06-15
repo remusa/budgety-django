@@ -22,39 +22,55 @@ def api_root(request, format=None):
 
 
 class ExpenseList(generics.ListCreateAPIView):
-    queryset = Expense.objects.all()
+    # Expense.objects.all()
     serializer_class = ExpenseSerializer
     permission_classes = (permissions.IsAuthenticated, IsOwner)
+
+    def get_queryset(self):
+        user = self.request.user
+        return Expense.objects.filter(owner=user)
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
 
 
 class ExpenseDetail(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Expense.objects.all()
+    # queryset = Expense.objects.all()
     serializer_class = ExpenseSerializer
     permission_classes = (permissions.IsAuthenticated, IsOwner)
 
+    def get_queryset(self):
+        user = self.request.user
+        return Expense.objects.filter(owner=user)
+
 
 class IncomeList(generics.ListCreateAPIView):
-    queryset = Income.objects.all()
+    # queryset = Income.objects.all()
     serializer_class = IncomeSerializer
     permission_classes = (permissions.IsAuthenticated, IsOwner)
+
+    # def get_queryset(self):
+    #     user = self.request.user
+    #     return Income.objects.filter(owner=user)
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
 
 
 class IncomeDetail(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Income.objects.all()
+    # queryset = Income.objects.all()
     serializer_class = IncomeSerializer
     permission_classes = (permissions.IsAuthenticated, IsOwner)
+
+    def get_queryset(self):
+        user = self.request.user
+        return Income.objects.filter(owner=user)
 
 
 class UserList(generics.ListAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
-    permission_classes = (permissions.IsAuthenticated, IsOwner)
+    permission_classes = (permissions.IsAuthenticated, permissions.IsAdminUser)
 
 
 class UserDetail(generics.RetrieveAPIView):

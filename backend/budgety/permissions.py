@@ -9,12 +9,12 @@ class IsOwner(permissions.BasePermission):
     """
 
     def has_object_permission(self, request, view, obj):
-        """Custom permission class to allow only bucketlist owners to edit them."""
-        if isinstance(obj, Expense) or isinstance(obj, Income):
-            return obj.owner == request.user
-        return obj.owner == request.user
-
-        # if request.method in permissions.SAFE_METHODS:
-        #     return True
+        """Custom permission class to allow only owners to edit them."""
+        # if isinstance(obj, Expense) or isinstance(obj, Income):
+        #     return obj.owner == request.user
         # return obj.owner == request.user
+
+        if request.method in permissions.SAFE_METHODS:
+            return True
+        return obj.owner == request.user
 
