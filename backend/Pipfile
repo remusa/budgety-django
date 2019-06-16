@@ -8,12 +8,12 @@ verify_ssl = true
 [packages]
 django = "*"
 djangorestframework = "*"
+django-cors-headers = "*"
+django-rest-knox = "*"
 coreapi = "*"
 pyyaml = "*"
 coreapi-cli = "*"
-django-cors-headers = "*"
 coverage = "*"
-django-rest-knox = "*"
 
 [requires]
 python_version = "3.6"
