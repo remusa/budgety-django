@@ -5,36 +5,47 @@ const MainStyles = styled.section`
     grid-area: main;
 `
 
-const API_ENDPOINT = 'http://127.0.0.1:8000/api/'
-
 const list = [
     {
         id: 1,
-        title: '1st Item',
-        description: 'Description here.',
+        total: 123.45,
+        category: 'ENTERTAINMENT',
+        note: '1st Item',
+        date: 'Wednesday',
     },
     {
         id: 2,
-        title: '2nd Item',
-        description: 'Another description here.',
+        total: 223.45,
+        category: 'ENTERTAINMENT',
+        note: '2nd Item',
+        date: 'Thursday',
     },
     {
         id: 3,
-        title: '3rd Item',
-        description: 'Third description here.',
+        note: '3rd Item',
+        category: 'ENTERTAINMENT',
+        total: 323.45,
+        date: 'Friday',
     },
 ]
+
+const API_ENDPOINT = 'http://127.0.0.1:8000/api'
 
 const Main = () => {
     const [expenses, setExpenses] = useState(list)
 
-    // useEffect(() => {
-    //     const exp = fetch()
+    useEffect(() => {
+        async function fetchData() {
+            try {
+                const res = await fetch(`http://127.0.0.1:8000/api/expenses/`)
+                console.log(`${res}`)
+            } catch (e) {
+                console.log(`ERROR: ${e.message}`)
+            }
+        }
 
-    //     return () => {
-    //         effect
-    //     };
-    // }, [input])
+        fetchData()
+    }, [])
 
     return (
         <MainStyles className='hero is-primary'>
@@ -44,9 +55,11 @@ const Main = () => {
                     <h2 className='subtitle'>A simple boilerplate for React apps</h2>
 
                     {expenses.map(expense => (
-                        <div>
-                            <h1>{expense.title}</h1>
-                            <p>{expense.description}</p>
+                        <div key={expense.id}>
+                            <h2>{expense.note}</h2>
+                            <p>{expense.category}</p>
+                            <p>{expense.total}</p>
+                            <p>{expense.date}</p>
                         </div>
                     ))}
                 </div>

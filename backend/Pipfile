@@ -12,6 +12,8 @@ coreapi = "*"
 pyyaml = "*"
 coreapi-cli = "*"
 django-cors-headers = "*"
+coverage = "*"
+django-rest-knox = "*"
 
 [requires]
 python_version = "3.6"
