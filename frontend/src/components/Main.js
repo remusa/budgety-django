@@ -31,7 +31,7 @@ const list = [
     },
 ]
 
-const API_ENDPOINT = 'http://127.0.0.1:8000/api'
+const API_ENDPOINT = 'http://127.0.0.1:8000/api/v1'
 
 const Main = () => {
     const [expenses, setExpenses] = useState(list)
