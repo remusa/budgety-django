@@ -30,9 +30,9 @@ const Header = () => (
                     aria-expanded='false'
                     data-target='navbarBasicExample'
                 >
-                    <span aria-hidden='true'></span>
-                    <span aria-hidden='true'></span>
-                    <span aria-hidden='true'></span>
+                    <span aria-hidden='true' />
+                    <span aria-hidden='true' />
+                    <span aria-hidden='true' />
                 </a>
             </div>
 
@@ -41,23 +41,6 @@ const Header = () => (
                     <Link className='navbar-item' to='/'>
                         Home
                     </Link>
-
-                    <div className='navbar-item has-dropdown is-hoverable'>
-                        <a className='navbar-link'>More</a>
-
-                        <div className='navbar-dropdown'>
-                            <Link className='navbar-item' to='/about'>
-                                About
-                            </Link>
-                            <Link className='navbar-item' to='/contact'>
-                                Contact
-                            </Link>
-                            <hr className='navbar-divider' />
-                            <Link className='navbar-item' to='/issues'>
-                                Report an issue
-                            </Link>
-                        </div>
-                    </div>
                 </div>
 
                 <div className='navbar-end'>

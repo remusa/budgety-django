@@ -3,6 +3,8 @@ import styled from 'styled-components'
 
 const MainStyles = styled.section`
     grid-area: main;
+
+    height: 100vh;
 `
 
 const list = [

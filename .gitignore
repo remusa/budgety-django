@@ -2,6 +2,9 @@
 
 .vscode/
 
+*.sqlite3
+backend/db.sqlite3
+
 node_modules/
 
 dist/
@@ -92,3 +95,4 @@ typings/
 .dynamodb/
 
 # End of https://www.gitignore.io/api/node
+
