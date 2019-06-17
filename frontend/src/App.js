@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Route, Switch } from 'react-router-dom'
+import { Route, Switch, Link } from 'react-router-dom'
 import styled from 'styled-components'
 import 'normalize.css'
 import Footer from './components/Footer'
@@ -24,10 +24,21 @@ const AppStyles = styled.div`
     }
 `
 
+const NotFoundStyles = styled.div`
+    grid-area: main;
+
+    height: 100%;
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: center;
+    align-items: center;
+`
+
 const NotFound = () => (
-    <div>
-        <h1>404, Not Found!</h1>
-    </div>
+    <NotFoundStyles>
+        <h1>Sorry... nothing here.</h1>
+        <Link to='/'>Go home</Link>
+    </NotFoundStyles>
 )
 
 const App = () => (

@@ -8,24 +8,40 @@ const AuthProvider = props => {
     //     return <div>Loading...</div>
     // }
 
-    const register = async () => {
-        const user = {}
-        const conf = {
+    const register = async (email, username, password) => {
+        const options = {
             method: 'POST',
-            headers: new Headers({ 'Content-Type': 'application/json' }),
-            body: JSON.stringify(user),
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ email, username, password }),
         }
-        const response = await fetch(`${API_ENDPOINT}/auth/register`, conf)
+        try {
+            const response = await fetch(`${API_ENDPOINT}/auth/login`, options)
+            const data = await response.json()
+            localStorage.setItem('token', data.token)
+            console.log(localStorage.getItem('token'))
+        } catch (err) {
+            console.log(`LOGIN ERROR: ${err.message}`)
+        }
     }
 
-    const login = async () => {
-        const user = {}
-        const conf = {
+    const login = async (username, password) => {
+        const options = {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(user),
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ username, password }),
         }
-        const response = await fetch(`${API_ENDPOINT}/auth/login`, conf)
+        try {
+            const response = await fetch(`${API_ENDPOINT}/auth/login`, options)
+            const data = await response.json()
+            localStorage.setItem('token', data.token)
+            console.log(localStorage.getItem('token'))
+        } catch (err) {
+            console.log(`LOGIN ERROR: ${err.message}`)
+        }
     }
 
     const logout = () => {}
