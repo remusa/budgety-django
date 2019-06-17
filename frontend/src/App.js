@@ -24,22 +24,25 @@ const AppStyles = styled.div`
     }
 `
 
-class App extends Component {
-    render() {
-        return (
-            <AppStyles className='App'>
-                <Header />
+const NotFound = () => (
+    <div>
+        <h1>404, Not Found!</h1>
+    </div>
+)
 
-                <Switch>
-                    <Route path='/' exact component={Main} />
-                    <Route path='/login' exact component={Login} />
-                    <Route path='/register' exact component={Register} />
-                </Switch>
+const App = () => (
+    <AppStyles className='App'>
+        <Header />
 
-                <Footer />
-            </AppStyles>
-        )
-    }
-}
+        <Switch>
+            <Route path='/' exact component={Main} />
+            <Route path='/login' exact component={Login} />
+            <Route path='/register' exact component={Register} />
+            <Route component={NotFound} />
+        </Switch>
+
+        <Footer />
+    </AppStyles>
+)
 
 export default App

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
+import { API_ENDPOINT } from '../config'
 
 const MainStyles = styled.section`
     grid-area: main;
@@ -31,16 +32,22 @@ const list = [
     },
 ]
 
-const API_ENDPOINT = 'http://127.0.0.1:8000/api/v1'
-
 const Main = () => {
     const [expenses, setExpenses] = useState(list)
 
     useEffect(() => {
-        async function fetchData() {
+        const fetchData = async () => {
             try {
-                const res = await fetch(`http://127.0.0.1:8000/api/expenses/`)
-                console.log(`${res}`)
+                const options = {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: `Token ${localStorage.getItem('token')}`,
+                    },
+                }
+                const response = await fetch(`${API_ENDPOINT}/expenses/`, options)
+                const data = await response.json()
+                setExpenses(data.results)
             } catch (e) {
                 console.log(`ERROR: ${e.message}`)
             }
@@ -53,8 +60,8 @@ const Main = () => {
         <MainStyles className='hero is-primary'>
             <div className='hero-body'>
                 <div className='container'>
-                    <h1 className='title'>React + Parcel Boilerplate</h1>
-                    <h2 className='subtitle'>A simple boilerplate for React apps</h2>
+                    <h1 className='title'>Budgety</h1>
+                    <h2 className='subtitle'>Expenses</h2>
 
                     {expenses.map(expense => (
                         <div key={expense.id}>
