@@ -1,19 +1,24 @@
-import React, { createContext, useContext, useState } from 'react'
-import { Redirect } from 'react-router-dom'
+import React, { createContext, useContext, useState, useEffect } from 'react'
+import { withRouter, Redirect } from 'react-router-dom'
 import { API_ENDPOINT } from '../config'
 
 const AuthContext = createContext()
 
 const AuthProvider = props => {
-    const [user, setUser] = useState(null)
+    const [isLogged, setIsLogged] = useState(!!localStorage.getItem('user'))
+    const [user, setUser] = useState(localStorage.getItem('user') || null)
+    const { history } = props
 
-    // console.log(`${props.history}`)
+    useEffect(() => {
+        if (localStorage.getItem('token')) {
+            setIsLogged(true)
+        }
+        if (localStorage.getItem('user')) {
+            setUser(localStorage.getItem('user'))
+        }
+    }, [])
 
-    const redirectHome = () => {
-        console.log(`REDIRECTING HOME`)
-        // props.history.push('/')
-        return <Redirect to='/' />
-    }
+    const redirectHome = () => history.push('/')
 
     const register = async ({ email, username, password }) => {
         const options = {
@@ -27,8 +32,10 @@ const AuthProvider = props => {
             const response = await fetch(`${API_ENDPOINT}/auth/register`, options)
             const data = await response.json()
             console.log(`${Object.entries(data)}`)
-            setUser(data)
             localStorage.setItem('token', data.token)
+            localStorage.setItem('user', data.user.username)
+            setUser(data.user.username)
+            setIsLogged(true)
             redirectHome()
         } catch (err) {
             console.log(`REGISTRATION ERROR: ${err.message}`)
@@ -46,28 +53,44 @@ const AuthProvider = props => {
         try {
             const response = await fetch(`${API_ENDPOINT}/auth/login`, options)
             const data = await response.json()
-            console.log(`LOGGING IN: ${Object.entries(data)}`)
-            setUser(data.user)
             localStorage.setItem('token', data.token)
+            localStorage.setItem('user', data.user.username)
+            setUser(data.user.username)
+            setIsLogged(true)
             redirectHome()
         } catch (err) {
             console.log(`LOGIN ERROR: ${err.message}`)
         }
     }
 
-    const logout = () => {
-        localStorage.removeItem('token')
-        redirectHome()
+    const logout = async () => {
+        const options = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: '',
+        }
+        try {
+            await fetch(`${API_ENDPOINT}/auth/logout`, options)
+            localStorage.removeItem('token')
+            localStorage.removeItem('user')
+            setUser(null)
+            setIsLogged(false)
+            redirectHome()
+        } catch (err) {
+            console.log(`LOGOUT ERROR: ${err.message}`)
+        }
     }
 
     return (
-        <AuthContext.Provider value={{ user, register, login, logout }} {...props}>
+        <AuthContext.Provider value={{ user, isLogged, register, login, logout }} {...props}>
             {props.children}
         </AuthContext.Provider>
     )
 }
 
-function useAuth() {
+export function useAuth() {
     const context = useContext(AuthContext)
     if (context === undefined) {
         throw new Error(`useAuth must be used within a AuthProvider`)
@@ -75,4 +98,4 @@ function useAuth() {
     return context
 }
 
-export { AuthProvider, useAuth }
+export default withRouter(AuthProvider)

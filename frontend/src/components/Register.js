@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import { stringify } from 'querystring'
+import { Redirect } from 'react-router-dom'
 import { API_ENDPOINT } from '../config'
 import { useAuth } from '../context/AuthContext'
 
@@ -13,7 +14,9 @@ const Register = props => {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
 
-    const { register } = useAuth()
+    const { register, isLogged } = useAuth()
+
+    if (isLogged) return <Redirect to='/' />
 
     const handleSubmit = e => {
         e.preventDefault()
