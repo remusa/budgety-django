@@ -1,58 +1,47 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
+import nprogress from 'nprogress'
 import { API_ENDPOINT } from '../config'
 import { useAuth } from '../context/AuthContext'
+import '../static/nprogress.css'
+import List from './List'
+import Loading from './Loading'
+import { fetchExpenses, fetchIncomes } from '../api/fetchData'
 
 const MainStyles = styled.section`
     grid-area: main;
-
-    /* height: 100vh; */
 `
 
 const Main = () => {
     const [expenses, setExpenses] = useState(null)
+    const [incomes, setIncomes] = useState(null)
     const { isLogged } = useAuth()
 
+    /* eslint-disable */
     useEffect(() => {
         const fetchData = async () => {
-            if (localStorage.getItem('token')) {
-                try {
-                    const options = {
-                        method: 'GET',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            Authorization: `Token ${localStorage.getItem('token')}`,
-                        },
-                    }
-                    const response = await fetch(`${API_ENDPOINT}/expenses/`, options)
-                    const data = await response.json()
-                    setExpenses(data.results)
-                } catch (e) {
-                    console.log(`ERROR: ${e.message}`)
-                }
-            }
+            nprogress.start()
+            setExpenses(await fetchExpenses())
+            setIncomes(await fetchIncomes())
+            nprogress.done()
         }
-
         fetchData()
     }, [])
+    /* eslint-enable */
 
     return (
         <MainStyles className='hero is-primary'>
             <div className='hero-body'>
                 <div className='container'>
                     <h1 className='title'>Budgety</h1>
-                    <h2 className='subtitle'>Expenses</h2>
 
-                    {isLogged &&
-                        expenses &&
-                        expenses.map(expense => (
-                            <div key={expense.id}>
-                                <h2>{expense.note}</h2>
-                                <p>{expense.category}</p>
-                                <p>{expense.total}</p>
-                                <p>{expense.date}</p>
-                            </div>
-                        ))}
+                    <h2 className='subtitle'>Expenses</h2>
+                    {isLogged && (expenses ? <List data={expenses} /> : <Loading />)}
+
+                    <hr />
+
+                    <h2 className='subtitle'>Incomes</h2>
+                    {isLogged && (incomes ? <List data={incomes} /> : <Loading />)}
                 </div>
             </div>
         </MainStyles>

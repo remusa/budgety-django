@@ -1,6 +1,9 @@
 import React, { createContext, useContext, useState, useEffect } from 'react'
 import { withRouter, Redirect } from 'react-router-dom'
+import nprogress from 'nprogress'
 import { API_ENDPOINT } from '../config'
+
+import '../static/nprogress.css'
 
 const AuthContext = createContext()
 
@@ -18,9 +21,14 @@ const AuthProvider = props => {
         }
     }, [])
 
-    const redirectHome = () => history.push('/')
+    const redirectHome = () => {
+        nprogress.start()
+        history.push('/')
+        nprogress.done()
+    }
 
     const register = async ({ email, username, password }) => {
+        nprogress.start()
         const options = {
             method: 'POST',
             headers: {
@@ -40,9 +48,11 @@ const AuthProvider = props => {
         } catch (err) {
             console.log(`REGISTRATION ERROR: ${err.message}`)
         }
+        nprogress.done()
     }
 
     const login = async ({ username, password }) => {
+        nprogress.start()
         const options = {
             method: 'POST',
             headers: {
@@ -61,9 +71,11 @@ const AuthProvider = props => {
         } catch (err) {
             console.log(`LOGIN ERROR: ${err.message}`)
         }
+        nprogress.done()
     }
 
     const logout = async () => {
+        nprogress.start()
         const options = {
             method: 'POST',
             headers: {
@@ -81,6 +93,7 @@ const AuthProvider = props => {
         } catch (err) {
             console.log(`LOGOUT ERROR: ${err.message}`)
         }
+        nprogress.done()
     }
 
     return (
