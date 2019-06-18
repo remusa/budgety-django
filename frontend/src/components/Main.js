@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { API_ENDPOINT } from '../config'
+import { useAuth } from '../context/AuthContext'
 
 const MainStyles = styled.section`
     grid-area: main;
@@ -10,6 +11,7 @@ const MainStyles = styled.section`
 
 const Main = () => {
     const [expenses, setExpenses] = useState(null)
+    const { isLogged } = useAuth()
 
     useEffect(() => {
         const fetchData = async () => {
@@ -41,7 +43,8 @@ const Main = () => {
                     <h1 className='title'>Budgety</h1>
                     <h2 className='subtitle'>Expenses</h2>
 
-                    {expenses &&
+                    {isLogged &&
+                        expenses &&
                         expenses.map(expense => (
                             <div key={expense.id}>
                                 <h2>{expense.note}</h2>
