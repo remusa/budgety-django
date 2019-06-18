@@ -9,11 +9,32 @@ from django.utils.timezone import now
 #     name = models.CharField(_(""), max_length=50)
 
 
+class ExpenseCategory(models.Model):
+    expense_category = models.CharField(max_length=150)
+
+    class Meta:
+        verbose_name_plural = "Expense Categories"
+
+    def __str__(self):
+        return self.expense_category
+
+
+class IncomeCategory(models.Model):
+    income_category = models.CharField(max_length=150)
+
+    class Meta:
+        verbose_name_plural = "Income Categories"
+
+    def __str__(self):
+        return self.income_category
+
+
 class Expense(models.Model):
     CATEGORY_CHOICES = [("FOOD_&_DRINK", "Food & Drink"), ("ENTERTAINMENT", "Entertainment")]
 
     total = models.FloatField(blank=True, default=0)
     category = models.CharField(choices=CATEGORY_CHOICES, max_length=100, default="Food & Drink")
+    # category = models.ForeignKey(ExpenseCategory, on_delete=models.SET_NULL, null=True)
     note = models.CharField(max_length=150, blank=True, default="")
     date = models.DateTimeField(default=now, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -33,6 +54,7 @@ class Income(models.Model):
 
     total = models.FloatField(blank=True, default=0)
     category = models.CharField(choices=CATEGORY_CHOICES, max_length=100, default="Salary")
+    # category = models.ForeignKey(IncomeCategory, on_delete=models.SET_NULL, null=True)
     note = models.CharField(max_length=150, blank=True, default="")
     date = models.DateTimeField(default=now, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
