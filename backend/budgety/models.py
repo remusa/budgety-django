@@ -30,9 +30,26 @@ class IncomeCategory(models.Model):
 
 
 class Expense(models.Model):
-    CATEGORY_CHOICES = [("FOOD_&_DRINK", "Food & Drink"), ("ENTERTAINMENT", "Entertainment")]
+    CATEGORY_CHOICES = [
+        ("FOOD_&_DRINK", "Food & Beverages"),
+        ("BILLS_&_UTILITIES", "Bills & Utilities"),
+        ("TRANSPORTATION", "Transportation"),
+        ("SHOPPING", "Shopping"),
+        ("ENTERTAINMENT", "Entertainment"),
+        ("HEALTH_&_FITNESS", "Health & Fitness"),
+        ("GIFTS_&_DONATIONS", "Gifts & Donations"),
+        ("FAMILY", "Family"),
+        ("EDUCATION", "Education"),
+        ("INVESTMENT", "Investment"),
+        ("BUSINESS", "Business"),
+        ("INSURANCES", "Insurances"),
+        ("FEES_&_CHARGES", "Fees & Charges"),
+        ("WITHDRAWAL", "Withdrawal"),
+        ("OTHERS", "Others"),
+    ]
 
     total = models.FloatField(blank=True, default=0)
+    CATEGORY_CHOICES = [("FOOD_&_DRINK", "Food & Beverages"), ("ENTERTAINMENT", "Entertainment")]
     category = models.CharField(choices=CATEGORY_CHOICES, max_length=100, default="Food & Drink")
     # category = models.ForeignKey(ExpenseCategory, on_delete=models.SET_NULL, null=True)
     note = models.CharField(max_length=150, blank=True, default="")
@@ -50,7 +67,14 @@ class Expense(models.Model):
 
 
 class Income(models.Model):
-    CATEGORY_CHOICES = [("SALARY", "Salary")]
+    CATEGORY_CHOICES = [
+        ("SALARY", "Salary"),
+        ("INTEREST_MONEY", "Interest money"),
+        ("GIFTS", "Gifts"),
+        ("SELLING", "Selling"),
+        ("AWARD", "Award"),
+        ("OTHERS", "Others"),
+    ]
 
     total = models.FloatField(blank=True, default=0)
     category = models.CharField(choices=CATEGORY_CHOICES, max_length=100, default="Salary")
