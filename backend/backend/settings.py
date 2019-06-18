@@ -37,20 +37,20 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    # "corsheaders",
     "rest_framework",
-    "budgety",
+    "corsheaders",
     "knox",
+    "budgety",
 ]
 
-CORS_ORIGIN_WHITELIST = ["localhost:1234", "http://localhost:1234", "http://127.0.0.1:1234"]
+CORS_ORIGIN_WHITELIST = ["http://localhost:1234", "http://127.0.0.1:1234"]
 
 MIDDLEWARE = [
-    # "corsheaders.middleware.CorsMiddleware",
-    # "django.middleware.common.CommonMiddleware",
+    "corsheaders.middleware.CorsMiddleware",
+    "django.middleware.common.CommonMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
-    "django.middleware.common.CommonMiddleware",
+    # "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
@@ -120,8 +120,11 @@ USE_TZ = True
 STATIC_URL = "/static/"
 
 REST_FRAMEWORK = {
-    # "DEFAULT_PERMISSION_CLASSES":["rest_framework.permissions.AllowAny"],
-    "DEFAULT_AUTHENTICATION_CLASSES": ("knox.auth.TokenAuthentication",),
+    # "DEFAULT_PERMISSION_CLASSES": ("rest_framework.permissions.IsAuthenticated",),
+    "DEFAULT_AUTHENTICATION_CLASSES": (
+        "rest_framework.authentication.SessionAuthentication",
+        "knox.auth.TokenAuthentication",
+    ),  #  'rest_framework.authentication.TokenAuthentication',
     "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
     "PAGE_SIZE": 10,
 }
