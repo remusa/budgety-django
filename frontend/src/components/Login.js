@@ -1,39 +1,28 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import { API_ENDPOINT } from '../config'
+import { useAuth } from '../context/AuthContext'
 
 const LoginStyles = styled.section`
     grid-area: main;
 `
 
-export default function Login() {
+const Login = props => {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
 
-    const handleSubmit = async e => {
+    const { login } = useAuth()
+
+    const handleSubmit = e => {
         e.preventDefault()
-        const options = {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ username, password }),
-        }
-        try {
-            const response = await fetch(`${API_ENDPOINT}/auth/login`, options)
-            const data = await response.json()
-            localStorage.setItem('token', data.token)
-            console.log(localStorage.getItem('token'))
-        } catch (err) {
-            console.log(`LOGIN ERROR: ${err.message}`)
-        }
+        login({ username, password })
     }
 
     const handleChange = e => {
         const { name, value } = e.target
         e.preventDefault()
         if (name === 'username') setUsername(value)
-        if (name === 'password') setPassword(value)
+        else if (name === 'password') setPassword(value)
     }
 
     return (
@@ -96,3 +85,5 @@ export default function Login() {
         </LoginStyles>
     )
 }
+
+export default Login

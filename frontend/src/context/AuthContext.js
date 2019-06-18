@@ -1,14 +1,21 @@
-import React, { createContext, useContext } from 'react'
+import React, { createContext, useContext, useState } from 'react'
+import { Redirect } from 'react-router-dom'
 import { API_ENDPOINT } from '../config'
 
 const AuthContext = createContext()
 
 const AuthProvider = props => {
-    // if (loading) {
-    //     return <div>Loading...</div>
-    // }
+    const [user, setUser] = useState(null)
 
-    const register = async (email, username, password) => {
+    // console.log(`${props.history}`)
+
+    const redirectHome = () => {
+        console.log(`REDIRECTING HOME`)
+        // props.history.push('/')
+        return <Redirect to='/' />
+    }
+
+    const register = async ({ email, username, password }) => {
         const options = {
             method: 'POST',
             headers: {
@@ -17,16 +24,18 @@ const AuthProvider = props => {
             body: JSON.stringify({ email, username, password }),
         }
         try {
-            const response = await fetch(`${API_ENDPOINT}/auth/login`, options)
+            const response = await fetch(`${API_ENDPOINT}/auth/register`, options)
             const data = await response.json()
+            console.log(`${Object.entries(data)}`)
+            setUser(data)
             localStorage.setItem('token', data.token)
-            console.log(localStorage.getItem('token'))
+            redirectHome()
         } catch (err) {
-            console.log(`LOGIN ERROR: ${err.message}`)
+            console.log(`REGISTRATION ERROR: ${err.message}`)
         }
     }
 
-    const login = async (username, password) => {
+    const login = async ({ username, password }) => {
         const options = {
             method: 'POST',
             headers: {
@@ -37,22 +46,33 @@ const AuthProvider = props => {
         try {
             const response = await fetch(`${API_ENDPOINT}/auth/login`, options)
             const data = await response.json()
+            console.log(`LOGGING IN: ${Object.entries(data)}`)
+            setUser(data.user)
             localStorage.setItem('token', data.token)
-            console.log(localStorage.getItem('token'))
+            redirectHome()
         } catch (err) {
             console.log(`LOGIN ERROR: ${err.message}`)
         }
     }
 
-    const logout = () => {}
+    const logout = () => {
+        localStorage.removeItem('token')
+        redirectHome()
+    }
 
     return (
-        <AuthContext.Provider value={{ register, login, logout }}>
-            {{ ...props }}
+        <AuthContext.Provider value={{ user, register, login, logout }} {...props}>
+            {props.children}
         </AuthContext.Provider>
     )
 }
 
-const useAuth = () => useContext(AuthContext)
+function useAuth() {
+    const context = useContext(AuthContext)
+    if (context === undefined) {
+        throw new Error(`useAuth must be used within a AuthProvider`)
+    }
+    return context
+}
 
 export { AuthProvider, useAuth }

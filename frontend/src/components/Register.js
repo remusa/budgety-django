@@ -2,46 +2,35 @@ import React, { useState } from 'react'
 import styled from 'styled-components'
 import { stringify } from 'querystring'
 import { API_ENDPOINT } from '../config'
+import { useAuth } from '../context/AuthContext'
 
 const RegisterStyles = styled.section`
     grid-area: main;
 `
 
-export default function Register() {
+const Register = props => {
     const [email, setEmail] = useState('')
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
 
-    const handleSubmit = async e => {
+    const { register } = useAuth()
+
+    const handleSubmit = e => {
         e.preventDefault()
-        const options = {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ email, username, password }),
-        }
-        try {
-            const response = await fetch(`${API_ENDPOINT}/auth/login`, options)
-            const data = await response.json()
-            localStorage.setItem('token', data.token)
-            console.log(localStorage.getItem('token'))
-        } catch (err) {
-            console.log(`LOGIN ERROR: ${err.message}`)
-        }
+        register({ email, username, password })
     }
 
     const handleChange = e => {
         const { name, value } = e.target
         e.preventDefault()
         if (name === 'email') setEmail(value)
-        if (name === 'username') setUsername(value)
-        if (name === 'password') setPassword(value)
+        else if (name === 'username') setUsername(value)
+        else if (name === 'password') setPassword(value)
     }
 
     return (
         <RegisterStyles className='section'>
-            <form onSubmit={handleSubmit}>
+            <form method='POST' onSubmit={handleSubmit}>
                 <fieldset>
                     <div className='columns is-vcentered '>
                         <div className='column is-4 is-offset-4'>
@@ -54,7 +43,7 @@ export default function Register() {
                                             name='username'
                                             className='input'
                                             type='text'
-                                            placeholder='Text input'
+                                            placeholder='Username'
                                             value={username}
                                             onChange={handleChange}
                                         />
@@ -72,7 +61,7 @@ export default function Register() {
                                             name='email'
                                             className='input is-danger'
                                             type='email'
-                                            placeholder='Email input'
+                                            placeholder='Email'
                                             value={email}
                                             onChange={handleChange}
                                         />
@@ -95,8 +84,8 @@ export default function Register() {
                                             required
                                             className='input is-success'
                                             name='password'
-                                            type='text'
-                                            placeholder='Text input'
+                                            type='password'
+                                            placeholder='Password'
                                             value={password}
                                             onChange={handleChange}
                                         />
@@ -124,3 +113,5 @@ export default function Register() {
         </RegisterStyles>
     )
 }
+
+export default Register
