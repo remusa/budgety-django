@@ -5,6 +5,8 @@ from rest_framework.response import Response
 from rest_framework.reverse import reverse
 from knox.models import AuthToken
 
+# from rest_framework.authtoken.models import Token
+
 from .models import Expense, Income
 from .permissions import IsOwner
 from .serializers import (
@@ -107,12 +109,15 @@ class LoginAPI(generics.GenericAPIView):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         user = serializer.validated_data
-        return Response(
-            {
-                "user": UserSerializer(user, context=self.get_serializer_context()).data,
-                "token": AuthToken.objects.create(user)[1],
-            }
-        )
+        if user:
+            return Response(
+                {
+                    "user": UserSerializer(user, context=self.get_serializer_context()).data,
+                    "token": AuthToken.objects.create(user)[1],
+                }
+            )
+        else:
+            return Response({"error": "Wrong Credentials"}, status=status.HTTP_400_BAD_REQUEST)
 
 
 class UserAPI(generics.RetrieveAPIView):
