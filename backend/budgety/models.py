@@ -49,7 +49,6 @@ class Expense(models.Model):
     ]
 
     total = models.FloatField(blank=True, default=0)
-    CATEGORY_CHOICES = [("FOOD_&_DRINK", "Food & Beverages"), ("ENTERTAINMENT", "Entertainment")]
     category = models.CharField(choices=CATEGORY_CHOICES, max_length=100, default="Food & Drink")
     # category = models.ForeignKey(ExpenseCategory, on_delete=models.SET_NULL, null=True)
     note = models.CharField(max_length=150, blank=True, default="")
