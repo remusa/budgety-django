@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import nprogress from 'nprogress'
-import { API_ENDPOINT } from '../config'
 import { useAuth } from '../context/AuthContext'
 import '../static/nprogress.css'
 import List from './List'
