@@ -7,6 +7,20 @@
     --color-grey-dark: hsl(0, 0%, 20%);
     --color-grey-darker: hsl(0, 0%, 15%);
     --color-black: hsl(0, 0%, 17%);
+
+    --color-blue: hsl(187, 100%, 42%);
+    --color-blue-dark: hsl(187, 100%, 33%);
+    --color-blue-darker: hsl(187, 100%, 38%);
+    --color-blue-light: hsl(187, 71%, 50%);
+    --color-blue-lightest: hsl(187, 71%, 59%);
+
+    --color-red: red;
+    --color-background: var(--color-white);
+    --color-font: var(--color-black);
+    --color-primary: var(--color-blue);
+    --color-primary-darker: var(--color-blue-dark);
+    --color-primary-lighter: var(--color-blue-light);
+    --color-primary-lightest: var(--color-blue-lightest);
 }
 
 @font-face {

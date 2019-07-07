@@ -3,6 +3,10 @@
         "titleBar.activeBackground": "#FF2C70",
         "titleBar.inactiveBackground": "#FF2C70CC"
     },
-    "python.pythonPath": "C:\\Python37\\python.exe"
+    "python.pythonPath": "C:\\Users\\rms\\.virtualenvs\\backend-SqmGgy3h\\Scripts\\python.exe",
+    "python.linting.enabled": true,
+    "python.linting.pep8Enabled": false,
+    "python.linting.pylintEnabled": true,
+    "python.linting.flake8Enabled": false
     // "eslint.packageManager": "pnpm"
 }

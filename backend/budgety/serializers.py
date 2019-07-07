@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
+from rest_framework.authtoken.models import Token
 
 from .models import Expense, Income
 
@@ -37,6 +38,8 @@ class RegisterSerializer(serializers.ModelSerializer):
         user = User.objects.create_user(
             validated_data["username"], validated_data["email"], validated_data["password"]
         )
+        # user.save()
+        # Token.objects.create(user=user)
         return user
 
 

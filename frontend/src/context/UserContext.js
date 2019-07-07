@@ -4,6 +4,8 @@ import { API_ENDPOINT } from '../config'
 const AuthContext = createContext()
 
 const UserProvider = props => {
+    const register = () => {}
+    const login = () => {}
     const logout = () => {}
 
     return (
