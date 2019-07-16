@@ -44,7 +44,11 @@ INSTALLED_APPS = [
     "budgety",
 ]
 
-CORS_ORIGIN_WHITELIST = ["http://localhost:1234", "http://127.0.0.1:1234"]
+CORS_ORIGIN_WHITELIST = [
+    "http://localhost:1234",
+    "http://localhost:3000",
+    "https://budgety-31e69.firebaseapp.com",
+]
 
 MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",

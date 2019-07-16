@@ -1,11 +1,11 @@
+import nprogress from 'nprogress'
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
-import nprogress from 'nprogress'
+import { fetchExpenses, fetchIncomes } from '../api/fetchData'
 import { useAuth } from '../context/AuthContext'
 import '../static/nprogress.css'
 import List from './List'
 import Loading from './Loading'
-import { fetchExpenses, fetchIncomes } from '../api/fetchData'
 
 const MainStyles = styled.section`
     grid-area: main;
@@ -29,17 +29,17 @@ const Main = () => {
     /* eslint-enable */
 
     return (
-        <MainStyles className='hero is-primary'>
-            <div className='hero-body'>
-                <div className='container'>
-                    <h1 className='title'>Budgety</h1>
+        <MainStyles className="hero is-primary">
+            <div className="hero-body">
+                <div className="container">
+                    <h1 className="title">Budgety</h1>
 
-                    <h2 className='subtitle'>Expenses</h2>
+                    <h2 className="subtitle">Expenses</h2>
                     {isLogged && (expenses ? <List data={expenses} /> : <Loading />)}
 
                     <hr />
 
-                    <h2 className='subtitle'>Incomes</h2>
+                    <h2 className="subtitle">Incomes</h2>
                     {isLogged && (incomes ? <List data={incomes} /> : <Loading />)}
                 </div>
             </div>
@@ -47,4 +47,4 @@ const Main = () => {
     )
 }
 
-export default Main
+export default React.memo(Main)

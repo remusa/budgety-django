@@ -1,6 +1,6 @@
-import React from 'react'
 import PropTypes from 'prop-types'
-import { AuthProvider } from './AuthContext'
+import React from 'react'
+import AuthProvider from './AuthContext'
 import { UserProvider } from './UserContext'
 
 const AppProviders = ({ children }) => (

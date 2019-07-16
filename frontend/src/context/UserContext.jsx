@@ -1,5 +1,4 @@
 import React, { createContext, useContext } from 'react'
-import { API_ENDPOINT } from '../config'
 
 const AuthContext = createContext()
 
