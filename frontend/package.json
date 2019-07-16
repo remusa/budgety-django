@@ -1,128 +1,65 @@
 {
-    "name": "parcel-react",
-    "version": "1.0.1",
-    "description": "React + Parcel boilerplate",
-    "main": "index.js",
-    "//": {
-        "comment": {
-            "build": "NODE_ENV=production parcel build dist/index.html --public-url ./"
-        }
+    "name": "frontend",
+    "version": "0.1.0",
+    "private": true,
+    "dependencies": {
+        "@emotion/core": "^10.0.14",
+        "nprogress": "^0.2.0",
+        "prop-types": "^15.7.2",
+        "react": "^16.8.6",
+        "react-dom": "^16.8.6",
+        "react-router-dom": "^5.0.1",
+        "react-scripts": "3.0.1",
+        "react-spinners": "^0.5.5",
+        "styled-components": "^4.3.2"
+    },
+    "devDependencies": {
+        "@types/jest": "24.0.15",
+        "@types/node": "12.6.3",
+        "@types/query-string": "^6.3.0",
+        "@types/react": "16.8.23",
+        "@types/react-dom": "16.8.4",
+        "@types/react-router-dom": "^4.3.4",
+        "@types/styled-components": "^4.1.18",
+        "cross-env": "^5.2.0",
+        "node-sass": "^4.12.0",
+        "typescript": "^3.5.3"
     },
     "scripts": {
-        "start": "cross-env NODE_ENV=development parcel public/index.html --open",
-        "build": "cross-env NODE_ENV=production parcel build public/index.html -d build",
+        "start": "cross-env SKIP_PREFLIGHT_CHECK=true NODE_ENV=development react-scripts start",
+        "build": "cross-env SKIP_PREFLIGHT_CHECK=true NODE_ENV=production react-scripts build",
+        "eject": "react-scripts eject",
         "test:watch": "jest --watch",
         "test:cov": "jest --coverage",
         "test": "npm run test:watch",
-        "lint": "eslint \"src/**/*.{js,jsx}\"",
-        "lint:quiet": "eslint \"src/**/*.{js,jsx}\" --quiet",
-        "lint:fix": "eslint \"src/**/*.{js,jsx}\" --fix && echo 'Lint complete.'",
+        "watch": "tsc --watch",
+        "lint": "eslint \"src/**/*.{js,jsx,ts,tsx}\"",
+        "lint:quiet": "eslint \"src/**/*.{js,jsx,ts,tsx}\" --quiet",
+        "lint:fix": "eslint \"src/**/*.{js,jsx,ts,tsx}\" --fix && echo 'Lint complete.'",
         "lint:fix2": "eslint . --fix && echo 'Lint complete.'",
-        "format": "prettier \"src/**/*.{js,html}\" --write && echo 'Format complete.'",
+        "format": "prettier \"src/**/*.{js,ts,html}\" --write && echo 'Format complete.'",
         "dev": "cross-env NODE_ENV=development npm start",
         "deploy": "npm run build && npm run firebase:deploy",
         "firebase:login": "firebase login",
         "firebase:init": "firebase init",
         "firebase:deploy": "firebase deploy"
     },
-    "dependencies": {
-        "@babel/polyfill": "^7.4.4",
-        "@emotion/core": "^10.0.14",
-        "normalize.css": "^8.0.1",
-        "nprogress": "^0.2.0",
-        "prop-types": "^15.7.2",
-        "react": "^16.8.6",
-        "react-dom": "^16.8.6",
-        "react-router-dom": "^5.0.1",
-        "react-spinners": "^0.5.5",
-        "styled-components": "^4.3.2"
-    },
-    "devDependencies": {
-        "@babel/core": "^7.5.0",
-        "@babel/plugin-proposal-class-properties": "^7.5.0",
-        "@babel/preset-env": "^7.5.0",
-        "@babel/preset-react": "^7.0.0",
-        "@testing-library/react": "^8.0.4",
-        "autoprefixer": "^9.6.0",
-        "babel-eslint": "^10.0.2",
-        "babel-jest": "^24.8.0",
-        "babel-preset-env": "^1.7.0",
-        "babel-preset-react": "^6.24.1",
-        "cross-env": "^5.2.0",
-        "eslint": "^5.16.0",
-        "eslint-config-airbnb": "^17.1.1",
-        "eslint-config-prettier": "^5.1.0",
-        "eslint-config-wesbos": "0.0.19",
-        "eslint-plugin-html": "^5.0.5",
-        "eslint-plugin-import": "^2.18.0",
-        "eslint-plugin-jsx-a11y": "^6.2.3",
-        "eslint-plugin-prettier": "^3.1.0",
-        "eslint-plugin-react": "^7.14.2",
-        "eslint-plugin-react-hooks": "^1.6.1",
-        "jest": "^24.8.0",
-        "majestic": "^1.6.0",
-        "node-sass": "^4.12.0",
-        "parcel-bundler": "^1.12.3",
-        "prettier": "^1.18.2",
-        "react-test-renderer": "^16.8.6",
-        "sass": "^1.22.3"
-    },
-    "jest": {
-        "testPathIgnorePatterns": [
-            "<rootDir>/node_modules/"
-        ],
-        "setupFilesAfterEnv": [
-            "@testing-library/react/cleanup-after-each"
-        ]
-    },
-    "postcss": {
-        "modules": false,
-        "plugins": {
-            "autoprefixer": {
-                "overrideBrowserslist": [
-                    ">1%",
-                    "last 4 versions",
-                    "Firefox ESR",
-                    "not ie < 9"
-                ],
-                "flexbox": "no-2009"
-            }
-        }
-    },
     "eslintConfig": {
-        "extends": [
-            "wesbos"
-        ]
+        "extends": "react-app"
     },
-    "babel": {
-        "presets": [
-            "@babel/preset-env",
-            "@babel/preset-react"
+    "browserslist": {
+        "production": [
+            ">0.2%",
+            "not dead",
+            "not op_mini all"
         ],
-        "plugins": [
-            "@babel/plugin-proposal-class-properties"
+        "development": [
+            "last 1 chrome version",
+            "last 1 firefox version",
+            "last 1 safari version"
         ]
     },
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/remusa/budgety.git"
-    },
-    "keywords": [
-        "parcel",
-        "react",
-        "budget",
-        "tracker"
-    ],
-    "author": "",
-    "license": "ISC",
-    "bugs": {
-        "url": "https://github.com/remusa/budgety/issues"
-    },
-    "homepage": "https://github.com/remusa/budgety#readme",
-    "browserslist": [
-        ">0.2%",
-        "not dead",
-        "not ie <= 11",
-        "not op_mini all"
-    ]
+    "jestConfig": {
+        "preset": "react-native-web"
+    }
 }

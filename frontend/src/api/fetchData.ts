@@ -7,7 +7,7 @@ const basicOptions = {
     },
 }
 
-const fetchData = async endpoint => {
+const fetchData = async (endpoint: string) => {
     if (localStorage.getItem('token')) {
         try {
             const response = await fetch(`${API_ENDPOINT}/${endpoint}/`, {
@@ -22,7 +22,7 @@ const fetchData = async endpoint => {
     }
 }
 
-const postData = async endpoint => {
+const postData = async (endpoint: string) => {
     if (localStorage.getItem('token')) {
         try {
             const response = await fetch(`${API_ENDPOINT}/${endpoint}/`, {
@@ -38,7 +38,6 @@ const postData = async endpoint => {
 }
 
 export const fetchExpenses = () => fetchData('expenses')
-export const postExpense = () => postData('expenses')
-
 export const fetchIncomes = () => fetchData('incomes')
+export const postExpense = () => postData('expenses')
 export const postIncome = () => postData('incomes')

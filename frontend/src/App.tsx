@@ -1,7 +1,6 @@
-import React, { Component } from 'react'
-import { Route, Switch, Link } from 'react-router-dom'
+import React from 'react'
+import { Link, Route, Switch } from 'react-router-dom'
 import styled from 'styled-components'
-import 'normalize.css'
 import Footer from './components/Footer'
 import Header from './components/Header'
 import Login from './components/Login'
@@ -34,26 +33,30 @@ const NotFoundStyles = styled.div`
     align-items: center;
 `
 
-const NotFound = () => (
-    <NotFoundStyles>
-        <h1>Sorry... nothing here.</h1>
-        <Link to='/'>Go home</Link>
-    </NotFoundStyles>
-)
+const NotFound: React.FC = () => {
+    return (
+        <NotFoundStyles>
+            <h1>Sorry... nothing here.</h1>
+            <Link to="/">Go home</Link>
+        </NotFoundStyles>
+    )
+}
 
-const App = () => (
-    <AppStyles className='App'>
-        <Header />
+const App: React.FC = () => {
+    return (
+        <AppStyles className="App">
+            <Header />
 
-        <Switch>
-            <Route path='/' exact component={Main} />
-            <Route path='/login' exact component={Login} />
-            <Route path='/register' exact component={Register} />
-            <Route component={NotFound} />
-        </Switch>
+            <Switch>
+                <Route path="/" exact component={Main} />
+                <Route path="/login" exact component={Login} />
+                <Route path="/register" exact component={Register} />
+                <Route component={NotFound} />
+            </Switch>
 
-        <Footer />
-    </AppStyles>
-)
+            <Footer />
+        </AppStyles>
+    )
+}
 
 export default App

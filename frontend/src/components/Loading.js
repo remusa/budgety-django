@@ -1,8 +1,9 @@
-import React, { Component } from 'react'
-import PropTypes from 'prop-types'
-import styled from 'styled-components'
+import React from 'react';
 import { css } from '@emotion/core'
+import PropTypes from 'prop-types'
+import { Component } from 'react'
 import { DotLoader } from 'react-spinners'
+import styled from 'styled-components'
 
 const override = css`
     display: block;
@@ -60,13 +61,13 @@ class Loading extends Component {
 
         return (
             <ContainerStyles>
-                <div className='sweet-loading'>
+                <div className="sweet-loading">
                     <DotLoader
                         css={override}
-                        sizeUnit='px'
+                        sizeUnit="px"
                         size={100}
                         // height={8}
-                        color='var(--color-primary-darker)'
+                        color="var(--color-primary-darker)"
                         loading={loading}
                     />
                 </div>

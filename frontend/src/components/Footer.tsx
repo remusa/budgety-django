@@ -7,20 +7,20 @@ const FooterStyles = styled.div`
     width: 100vw;
 `
 
-const Footer = () => (
+const Footer: React.FC = () => (
     <FooterStyles>
-        <footer className='footer'>
-            <div className='content has-text-centered'>
+        <footer className="footer">
+            <div className="content has-text-centered">
                 <p>
                     <strong>Budgety</strong> by{' '}
-                    <a target='_blank' rel='noopener noreferrer' href='https://renems.com'>
+                    <a target="_blank" rel="noopener noreferrer" href="https://renems.com">
                         R Sánchez
                     </a>
-                    <a href='http://github.com/remusa/budgety' />.
+                    <a href="http://github.com/remusa/budgety" />.
                 </p>
             </div>
         </footer>
     </FooterStyles>
 )
 
-export default Footer
+export default React.memo(Footer)
