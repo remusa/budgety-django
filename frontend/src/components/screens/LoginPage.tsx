@@ -1,26 +1,26 @@
+import styled from '@emotion/styled'
 import React, { useState } from 'react'
 import { Redirect } from 'react-router-dom'
-import styled from 'styled-components'
-import { useAuth } from '../context/AuthContext'
+import { useAuth } from '../../context/AuthContext'
 
 const LoginStyles = styled.section`
     grid-area: main;
 `
 
-const Login = props => {
-    const [username, setUsername] = useState('')
-    const [password, setPassword] = useState('')
+const Login = () => {
+    const [username, setUsername] = useState<string>('')
+    const [password, setPassword] = useState<string>('')
 
     const { isLogged, login } = useAuth()
 
     if (isLogged) return <Redirect to="/" />
 
-    const handleSubmit = e => {
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         login({ username, password })
     }
 
-    const handleChange = e => {
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target
         e.preventDefault()
         if (name === 'username') setUsername(value)

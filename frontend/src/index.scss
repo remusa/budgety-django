@@ -31,6 +31,7 @@
 }
 
 html {
+    -webkit-box-sizing: border-box;
     box-sizing: border-box;
     // font-size: 10px;
 }
@@ -38,6 +39,7 @@ html {
 *,
 *:before,
 *:after {
+    -webkit-box-sizing: inherit;
     box-sizing: inherit;
 }
 

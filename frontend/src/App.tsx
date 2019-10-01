@@ -1,11 +1,12 @@
+import styled from '@emotion/styled'
 import React from 'react'
 import { Link, Route, Switch } from 'react-router-dom'
-import styled from 'styled-components'
 import Footer from './components/Footer'
 import Header from './components/Header'
-import Login from './components/Login'
-import Main from './components/Main'
-import Register from './components/Register'
+import HomePage from './components/screens/HomePage'
+import Login from './components/screens/LoginPage'
+import Register from './components/screens/RegisterPage'
+import * as ROUTES from './constants/routes'
 import './index.scss'
 
 const AppStyles = styled.div`
@@ -48,9 +49,10 @@ const App: React.FC = () => {
             <Header />
 
             <Switch>
-                <Route path="/" exact component={Main} />
-                <Route path="/login" exact component={Login} />
-                <Route path="/register" exact component={Register} />
+                <Route path={ROUTES.HOME} exact component={HomePage} />
+                <Route path={ROUTES.LOGIN} exact component={Login} />
+                <Route path={ROUTES.REGISTER} exact component={Register} />
+
                 <Route component={NotFound} />
             </Switch>
 
