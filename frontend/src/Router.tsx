@@ -2,9 +2,10 @@ import styled from '@emotion/styled'
 import React from 'react'
 import { Route, Switch, Link } from 'react-router-dom'
 import HomePage from './screens/home/HomePage'
-import Login from './screens/auth/LoginPage'
-import Register from './screens/auth/RegisterPage'
+import LoginPage from './screens/auth/LoginPage'
+import RegisterPage from './screens/auth/RegisterPage'
 import * as ROUTES from './constants/routes'
+import TransactionsPage from './screens/transactions/TransactionsPage'
 
 const NotFoundStyles = styled.div`
     grid-area: main;
@@ -31,8 +32,9 @@ const Router: React.FC<Props> = () => {
     return (
         <Switch>
             <Route path={ROUTES.HOME} exact component={HomePage} />
-            <Route path={ROUTES.LOGIN} exact component={Login} />
-            <Route path={ROUTES.REGISTER} exact component={Register} />
+            <Route path={ROUTES.LOGIN} component={LoginPage} />
+            <Route path={ROUTES.REGISTER} component={RegisterPage} />
+            <Route path={ROUTES.TRANSACTIONS} component={TransactionsPage} />
 
             <Route component={NotFound} />
         </Switch>
