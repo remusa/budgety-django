@@ -47,6 +47,7 @@ INSTALLED_APPS = [
 CORS_ORIGIN_WHITELIST = [
     "http://localhost:1234",
     "http://localhost:3000",
+    "https://budgetty.netlify.com/login",
     "https://budgety-31e69.firebaseapp.com",
 ]
 
