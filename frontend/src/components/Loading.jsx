@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react';
 import PropTypes from 'prop-types'
 import { Component } from 'react'
 import { DotLoader } from 'react-spinners'
@@ -7,7 +7,7 @@ import styled from '@emotion/styled'
 const override = {
     display: 'block',
     margin: '0 auto',
-    borderColor: 'var(--color-primary-darker)',
+    borderColor: 'var(--color-primary-darker)'
 }
 
 const ContainerStyles = styled.div`
@@ -25,45 +25,56 @@ const StyledP = styled.p`
     color: var(--color-primary-darker);
 `
 
-const Loading = props => {
-    const [text, setText] = useEffect(props.text)
-    const speed = {props}
-    const [loading, setLoading] = useEffect(true)
+class Loading extends Component {
+    state = {
+        text: this.props.text,
+        speed: this.props.speed,
+        loading: true,
+    }
 
-    useEffect(() => {
-        const stopper = `${text}...`
+    componentDidMount() {
+        const stopper = `${this.props.text}...`
+        const { text, speed } = this.state
 
-        const interval = window.setInterval(() => {
+        this.interval = window.setInterval(() => {
             if (text === stopper) {
-                setText(props.text)
+                this.setState({
+                    text: this.props.text,
+                })
             } else {
-                setText(text.concat('.'))
+                this.setState({
+                    text: text.concat('.'),
+                })
             }
         }, speed)
+    }
 
-        return () => {
-            if (interval) {
-                window.clearInterval(interval)
-            }
+    componentWillUnmount() {
+        if (this.interval) {
+            window.clearInterval(this.interval)
         }
-    }, [props.text, setText, speed, text])
+    }
 
-    return (
-        <ContainerStyles>
-            <div className="sweet-loading">
-                <DotLoader
-                    css={override}
-                    sizeUnit="px"
-                    size={100}
-                    // height={8}
-                    color="var(--color-primary-darker)"
-                    loading={loading}
-                />
-            </div>
+    render() {
+        const { text, loading } = this.state
 
-            <StyledP>{text}</StyledP>
-        </ContainerStyles>
-    )
+        return (
+            <ContainerStyles>
+                <div className="sweet-loading">
+                    <DotLoader
+                        css={override}
+                        sizeUnit="px"
+                        size={100}
+                        // height={8}
+                        color="var(--color-primary-darker)"
+                        loading={loading}
+                    />
+                </div>
+
+                <StyledP>{text}</StyledP>
+            </ContainerStyles>
+        )
+    }
 }
 
 Loading.defaultProps = {
