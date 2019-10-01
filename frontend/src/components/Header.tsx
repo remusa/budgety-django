@@ -1,6 +1,6 @@
+import styled from '@emotion/styled'
 import React from 'react'
 import { Link } from 'react-router-dom'
-import styled from '@emotion/styled'
 import { useAuth } from '../context/AuthContext'
 
 const HeaderStyles = styled.header`
@@ -11,7 +11,7 @@ const HeaderStyles = styled.header`
     padding: 8px;
 `
 
-const Header = () => {
+const Header: React.FC = () => {
     const { isLogged, user, logout } = useAuth()
 
     return (
@@ -19,12 +19,7 @@ const Header = () => {
             <nav className="navbar" role="navigation" aria-label="main navigation">
                 <div className="navbar-brand">
                     <Link className="navbar-item" href="https://bulma.io" to="/">
-                        <img
-                            src="https://bulma.io/images/bulma-logo.png"
-                            alt="logo"
-                            width="112"
-                            height="28"
-                        />
+                        Home
                     </Link>
 
                     <a
