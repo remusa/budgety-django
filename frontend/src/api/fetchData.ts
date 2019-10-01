@@ -1,4 +1,5 @@
-import { API_ENDPOINT } from '../constants/constants'
+import { API_ENDPOINT, API_INCOMES } from '../constants/constants'
+import { API_EXPENSES } from './../constants/constants'
 
 const headers = {
     headers: {
@@ -10,35 +11,35 @@ const headers = {
 const getData = async (endpoint: string) => {
     if (localStorage.getItem('token')) {
         try {
-            const response = await fetch(`${API_ENDPOINT}/${endpoint}`, {
+            const response = await fetch(`${API_ENDPOINT}${endpoint}`, {
                 ...headers,
                 method: 'GET',
             })
-            const data = await response.json()
-            // localStorage.setItem(endpoint, JSON.stringify(data.results))
-            return data.results
+            const res = await response.json()
+            return res.results
         } catch (e) {
             console.log(`ERROR: ${e.message}`)
         }
     }
 }
 
-const postData = async (endpoint: string) => {
+const postData = async (endpoint: string, data: object) => {
     if (localStorage.getItem('token')) {
         try {
-            const response = await fetch(`${API_ENDPOINT}/${endpoint}`, {
+            const response = await fetch(`${API_ENDPOINT}${endpoint}`, {
                 ...headers,
                 method: 'POST',
+                body: JSON.stringify(data),
             })
-            const data = await response.json()
-            return data.results
+            const res = await response.json()
+            console.log('Response:', JSON.stringify(res))
         } catch (e) {
             console.log(`ERROR: ${e.message}`)
         }
     }
 }
 
-export const getExpenses = () => getData('expenses')
-export const getIncomes = () => getData('incomes')
-export const postExpense = () => postData('expenses')
-export const postIncome = () => postData('incomes')
+export const getExpenses = () => getData(API_EXPENSES)
+export const getIncomes = () => getData(API_INCOMES)
+export const postExpense = (data: object) => postData(API_EXPENSES, data)
+export const postIncome = (data: object) => postData(API_INCOMES, data)

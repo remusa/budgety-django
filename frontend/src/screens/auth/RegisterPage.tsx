@@ -1,20 +1,21 @@
 import styled from '@emotion/styled'
 import React, { useState } from 'react'
 import { Redirect } from 'react-router-dom'
+import * as ROUTES from '../../constants/routes'
 import { useAuth } from '../../context/AuthContext'
 
 const RegisterStyles = styled.section`
     grid-area: main;
 `
 
-const Register = () => {
+const RegisterPage = () => {
     const [email, setEmail] = useState<string>('')
     const [username, setUsername] = useState<string>('')
     const [password, setPassword] = useState<string>('')
 
     const { register, isLogged } = useAuth()
 
-    if (isLogged) return <Redirect to="/" />
+    if (isLogged) return <Redirect to={ROUTES.HOME} />
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
@@ -115,4 +116,4 @@ const Register = () => {
     )
 }
 
-export default Register
+export default RegisterPage

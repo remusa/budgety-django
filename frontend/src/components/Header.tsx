@@ -1,6 +1,7 @@
 import styled from '@emotion/styled'
 import React from 'react'
 import { Link } from 'react-router-dom'
+import * as ROUTES from '../constants/routes'
 import { useAuth } from '../context/AuthContext'
 
 const HeaderStyles = styled.header`
@@ -47,12 +48,12 @@ const Header: React.FC = () => {
                             <div className="buttons">
                                 {!isLogged && (
                                     <>
-                                        <Link className="button is-primary" to="/register">
-                                            <strong>Sign up</strong>
+                                        <Link className="button is-light" to={ROUTES.LOGIN}>
+                                            Log in
                                         </Link>
 
-                                        <Link className="button is-light" to="/login">
-                                            Log in
+                                        <Link className="button is-primary" to={ROUTES.REGISTER}>
+                                            <strong>Sign up</strong>
                                         </Link>
                                     </>
                                 )}
@@ -61,7 +62,14 @@ const Header: React.FC = () => {
                                     <>
                                         <span>Welcome, {user}</span>
 
-                                        <a onClick={logout} className="button is-primary">
+                                        <Link
+                                            className="button is-primary"
+                                            to={ROUTES.TRANSACTIONS}
+                                        >
+                                            <strong>Add transaction</strong>
+                                        </Link>
+
+                                        <a onClick={logout} className="button is-danger">
                                             <strong>Log out</strong>
                                         </a>
                                     </>
