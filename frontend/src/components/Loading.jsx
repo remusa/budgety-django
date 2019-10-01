@@ -1,10 +1,8 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import { Component } from 'react'
-import { DotLoader } from 'react-spinners'
-import styled from '@emotion/styled'
-
 import { css } from '@emotion/core'
+import styled from '@emotion/styled'
+import PropTypes from 'prop-types'
+import React, { Component } from 'react'
+import { DotLoader } from 'react-spinners'
 
 const override = css`
     display: block;
