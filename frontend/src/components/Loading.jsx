@@ -4,19 +4,19 @@ import { Component } from 'react'
 import { DotLoader } from 'react-spinners'
 import styled from '@emotion/styled'
 
-// import { css } from '@emotion/core'
+import { css } from '@emotion/core'
 
-// const override = css`
-//     display: block;
-//     margin: 0 auto;
-//     border-color: var(--color-primary-darker);
-// `
+const override = css`
+    display: block;
+    margin: 0 auto;
+    border-color: var(--color-primary-darker);
+`
 
-const override = {
-    display: 'block',
-    margin: '0 auto',
-    borderColor: 'var(--color-primary-darker)',
-}
+// const override = {
+//     display: 'block',
+//     margin: '0 auto',
+//     borderColor: 'var(--color-primary-darker)',
+// }
 
 const ContainerStyles = styled.div`
     height: 100%;
