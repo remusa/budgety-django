@@ -1,17 +1,29 @@
 import nprogress from 'nprogress'
 import React, { createContext, useContext, useEffect, useState } from 'react'
-import { withRouter } from 'react-router-dom'
+import { withRouter } from 'react-router'
 import { API_ENDPOINT } from '../constants/constants'
 import '../static/nprogress.css'
 
-const AuthContext = createContext()
+interface IContextProps {
+    user: string | null
+    isLogged: boolean
+    register: ({ email, username, password }: any) => void
+    login: ({ username, password }: any) => void
+    logout: () => void
+}
 
-const UserProvider = ({ history, children, ...props }) => {
-    const token = localStorage.getItem('token') ? localStorage.getItem('token') : null
-    const [isLogged, setIsLogged] = useState(token ? true : false)
-    const [user, setUser] = useState(
-        localStorage.getItem('user') ? localStorage.getItem('user') : null
-    )
+const AuthContext = createContext({} as IContextProps)
+
+interface Props {
+    history?: any
+    children?: any
+    props?: any
+}
+
+const UserProvider: React.FC<Props> = ({ history, children, ...props }) => {
+    const token = localStorage.getItem('token')
+    const [isLogged, setIsLogged] = useState<boolean>(token ? true : false)
+    const [user, setUser] = useState<string | null>(localStorage.getItem('user'))
 
     useEffect(() => {
         if (localStorage.getItem('token')) {
@@ -27,10 +39,19 @@ const UserProvider = ({ history, children, ...props }) => {
         nprogress.done()
     }
 
-    const setCredentials = data => {
-        const userData = data.user
+    interface IData {
+        data: {
+            user: {
+                username: string
+            }
+            token: string
+        }
+    }
 
+    const setCredentials = ({ data }: IData) => {
         localStorage.setItem('token', data.token)
+
+        const userData = data.user
         localStorage.setItem('user', userData.username)
         setUser(data.user.username)
 
@@ -47,7 +68,13 @@ const UserProvider = ({ history, children, ...props }) => {
         redirectHome()
     }
 
-    const register = async ({ email, username, password }) => {
+    interface IUser {
+        email?: string
+        username: string
+        password: string
+    }
+
+    const register = async ({ email, username, password }: IUser) => {
         nprogress.start()
 
         const data = await fetch(`${API_ENDPOINT}/auth/register`, {
@@ -63,10 +90,10 @@ const UserProvider = ({ history, children, ...props }) => {
                 nprogress.done()
             })
 
-        await setCredentials(data)
+        setCredentials({ data })
     }
 
-    const login = async ({ username, password }) => {
+    const login = async ({ username, password }: IUser) => {
         nprogress.start()
 
         const data = await fetch(`${API_ENDPOINT}/auth/login`, {
@@ -82,23 +109,22 @@ const UserProvider = ({ history, children, ...props }) => {
                 nprogress.done()
             })
 
-        await setCredentials(data)
+        await setCredentials({ data })
     }
 
     const logout = async () => {
         nprogress.start()
 
         await fetch(`${API_ENDPOINT}/auth/logout`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: '',
-            })
-            .catch(err => {
-                console.log(`LOGOUT ERROR: ${err.message}`)
-                nprogress.done()
-            })
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: '',
+        }).catch(err => {
+            console.log(`LOGOUT ERROR: ${err.message}`)
+            nprogress.done()
+        })
 
         removeCredentials()
         nprogress.done()
