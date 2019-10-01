@@ -1,13 +1,5 @@
 import * as yup from 'yup'
 
-export const amountVal = yup.number().required('Amount is required!')
-
-export const noteVal = yup
-    .string()
-    .min(1, 'Note must be at least 1 characters long')
-    .max(25, 'Note must be max. 25 characters')
-    .required('Note is required')
-
 export const usernameValidation = yup
     .string()
     .min(3, 'Username must be at least 3 characters long')
