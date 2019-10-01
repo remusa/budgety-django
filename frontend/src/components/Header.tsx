@@ -61,7 +61,14 @@ const Header: React.FC = () => {
                                     <>
                                         <span>Welcome, {user}</span>
 
-                                        <a onClick={logout} className="button is-primary">
+                                        <a
+                                            onClick={() => console.log('toggleModal')}
+                                            className="button is-primary"
+                                        >
+                                            <strong>Add transaction</strong>
+                                        </a>
+
+                                        <a onClick={logout} className="button is-danger">
                                             <strong>Log out</strong>
                                         </a>
                                     </>

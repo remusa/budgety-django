@@ -4,8 +4,8 @@ import React, { useEffect, useState } from 'react'
 import { getExpenses, getIncomes } from '../../api/fetchData'
 import { useAuth } from '../../context/AuthContext'
 import '../../static/nprogress.css'
-import List from '../List'
-import Loading from '../Loading'
+import List from '../../components/List'
+import Loading from '../../components/Loading'
 
 const MainStyles = styled.section`
     grid-area: main;

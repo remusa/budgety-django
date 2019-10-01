@@ -1,9 +1,9 @@
 import styled from '@emotion/styled'
 import React from 'react'
 import { Route, Switch, Link } from 'react-router-dom'
-import HomePage from './components/screens/HomePage'
-import Login from './components/screens/LoginPage'
-import Register from './components/screens/RegisterPage'
+import HomePage from './screens/home/HomePage'
+import Login from './screens/auth/LoginPage'
+import Register from './screens/auth/RegisterPage'
 import * as ROUTES from './constants/routes'
 
 const NotFoundStyles = styled.div`
