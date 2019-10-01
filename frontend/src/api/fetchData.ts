@@ -1,6 +1,6 @@
 import { API_ENDPOINT } from '../constants/constants'
 
-const basicOptions = {
+const headers = {
     headers: {
         'Content-Type': 'application/json',
         Authorization: `Token ${localStorage.getItem('token')}`,
@@ -11,7 +11,7 @@ const getData = async (endpoint: string) => {
     if (localStorage.getItem('token')) {
         try {
             const response = await fetch(`${API_ENDPOINT}/${endpoint}`, {
-                ...basicOptions,
+                ...headers,
                 method: 'GET',
             })
             const data = await response.json()
@@ -26,7 +26,7 @@ const postData = async (endpoint: string) => {
     if (localStorage.getItem('token')) {
         try {
             const response = await fetch(`${API_ENDPOINT}/${endpoint}`, {
-                ...basicOptions,
+                ...headers,
                 method: 'POST',
             })
             const data = await response.json()

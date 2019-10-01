@@ -1,13 +1,21 @@
-import React from 'react';
+import React from 'react'
 import PropTypes from 'prop-types'
 import { Component } from 'react'
 import { DotLoader } from 'react-spinners'
 import styled from '@emotion/styled'
 
+// import { css } from '@emotion/core'
+
+// const override = css`
+//     display: block;
+//     margin: 0 auto;
+//     border-color: var(--color-primary-darker);
+// `
+
 const override = {
     display: 'block',
     margin: '0 auto',
-    borderColor: 'var(--color-primary-darker)'
+    borderColor: 'var(--color-primary-darker)',
 }
 
 const ContainerStyles = styled.div`
