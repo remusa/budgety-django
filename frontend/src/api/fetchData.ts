@@ -32,7 +32,7 @@ const postData = async (endpoint: string, data: object) => {
                 body: JSON.stringify(data),
             })
             const res = await response.json()
-            console.log('Success:', JSON.stringify(res))
+            console.log('Response:', JSON.stringify(res))
         } catch (e) {
             console.log(`ERROR: ${e.message}`)
         }
