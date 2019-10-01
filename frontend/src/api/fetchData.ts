@@ -15,6 +15,7 @@ const getData = async (endpoint: string) => {
                 method: 'GET',
             })
             const data = await response.json()
+            localStorage.setItem(endpoint, data.results)
             return data.results
         } catch (e) {
             console.log(`ERROR: ${e.message}`)

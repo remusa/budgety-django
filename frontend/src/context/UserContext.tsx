@@ -1,8 +1,14 @@
 import React, { createContext, useContext } from 'react'
 
-const AuthContext = createContext()
+interface IContext {}
 
-const UserProvider = props => {
+const AuthContext = createContext({} as IContext)
+
+interface Props {
+    props?: any
+}
+
+const UserProvider: React.FC<Props> = ({ props }) => {
     const register = () => {}
     const login = () => {}
     const logout = () => {}

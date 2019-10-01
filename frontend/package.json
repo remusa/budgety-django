@@ -20,6 +20,7 @@
         "@types/react-dom": "16.8.4",
         "@types/react-router-dom": "^4.3.4",
         "cross-env": "^5.2.0",
+        "netlify-cli": "^2.15.0",
         "node-sass": "^4.12.0",
         "typescript": "^3.5.0"
     },
@@ -37,7 +38,8 @@
         "lint:fix2": "eslint . --fix && echo 'Lint complete.'",
         "format": "prettier \"src/**/*.{js,ts,html}\" --write && echo 'Format complete.'",
         "dev": "cross-env NODE_ENV=development npm start",
-        "deploy": "npm run build && npm run firebase:deploy",
+        "deploy": "npm run build && npm run netlify:deploy",
+        "netlify:deploy": "netlify deploy --dir=./build -p -m \"$(git log -1 --pretty=%B)\"",
         "firebase:login": "firebase login",
         "firebase:init": "firebase init",
         "firebase:deploy": "firebase deploy"
