@@ -1,7 +1,7 @@
 import nprogress from 'nprogress'
 import React, { createContext, useContext, useEffect, useState } from 'react'
 import { withRouter } from 'react-router-dom'
-import { API_ENDPOINT } from '../config'
+import { API_ENDPOINT } from '../constants/constants'
 import '../static/nprogress.css'
 
 const AuthContext = createContext()

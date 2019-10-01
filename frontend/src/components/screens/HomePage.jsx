@@ -1,29 +1,30 @@
+import styled from '@emotion/styled'
 import nprogress from 'nprogress'
 import React, { useEffect, useState } from 'react'
-import styled from 'styled-components'
-import { fetchExpenses, fetchIncomes } from '../api/fetchData'
-import { useAuth } from '../context/AuthContext'
-import '../static/nprogress.css'
-import List from './List'
-import Loading from './Loading'
+import { getExpenses, getIncomes } from '../../api/fetchData'
+import { useAuth } from '../../context/AuthContext'
+import '../../static/nprogress.css'
+import List from '../List'
+import Loading from '../Loading'
 
 const MainStyles = styled.section`
     grid-area: main;
 `
 
 const Main = () => {
-    const [expenses, setExpenses] = useState(null)
-    const [incomes, setIncomes] = useState(null)
+    const [expenses, setExpenses] = useState([])
+    const [incomes, setIncomes] = useState([])
     const { isLogged } = useAuth()
 
     /* eslint-disable */
     useEffect(() => {
         const fetchData = async () => {
             nprogress.start()
-            setExpenses(await fetchExpenses())
-            setIncomes(await fetchIncomes())
+            setExpenses(await getExpenses())
+            setIncomes(await getIncomes())
             nprogress.done()
         }
+
         fetchData()
     }, [])
     /* eslint-enable */

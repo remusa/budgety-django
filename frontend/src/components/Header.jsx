@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import styled from 'styled-components'
+import styled from '@emotion/styled'
 import { useAuth } from '../context/AuthContext'
 
 const HeaderStyles = styled.header`
@@ -13,7 +13,6 @@ const HeaderStyles = styled.header`
 
 const Header = () => {
     const { isLogged, user, logout } = useAuth()
-
 
     return (
         <HeaderStyles>

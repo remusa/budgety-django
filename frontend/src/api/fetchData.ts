@@ -1,4 +1,4 @@
-import { API_ENDPOINT } from '../config'
+import { API_ENDPOINT } from '../constants/constants'
 
 const basicOptions = {
     headers: {
@@ -7,10 +7,10 @@ const basicOptions = {
     },
 }
 
-const fetchData = async (endpoint: string) => {
+const getData = async (endpoint: string) => {
     if (localStorage.getItem('token')) {
         try {
-            const response = await fetch(`${API_ENDPOINT}/${endpoint}/`, {
+            const response = await fetch(`${API_ENDPOINT}/${endpoint}`, {
                 ...basicOptions,
                 method: 'GET',
             })
@@ -25,7 +25,7 @@ const fetchData = async (endpoint: string) => {
 const postData = async (endpoint: string) => {
     if (localStorage.getItem('token')) {
         try {
-            const response = await fetch(`${API_ENDPOINT}/${endpoint}/`, {
+            const response = await fetch(`${API_ENDPOINT}/${endpoint}`, {
                 ...basicOptions,
                 method: 'POST',
             })
@@ -37,7 +37,7 @@ const postData = async (endpoint: string) => {
     }
 }
 
-export const fetchExpenses = () => fetchData('expenses')
-export const fetchIncomes = () => fetchData('incomes')
+export const getExpenses = () => getData('expenses')
+export const getIncomes = () => getData('incomes')
 export const postExpense = () => postData('expenses')
 export const postIncome = () => postData('incomes')
