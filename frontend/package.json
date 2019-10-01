@@ -21,7 +21,7 @@
         "@types/react-router-dom": "^4.3.4",
         "cross-env": "^5.2.0",
         "node-sass": "^4.12.0",
-        "typescript": "^3.5.3"
+        "typescript": "^3.5.0"
     },
     "scripts": {
         "start": "cross-env SKIP_PREFLIGHT_CHECK=true NODE_ENV=development react-scripts start",

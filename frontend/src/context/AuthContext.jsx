@@ -9,7 +9,9 @@ const AuthContext = createContext()
 const UserProvider = ({ history, children, ...props }) => {
     const token = localStorage.getItem('token') ? localStorage.getItem('token') : null
     const [isLogged, setIsLogged] = useState(token ? true : false)
-    const [user, setUser] = useState(null)
+    const [user, setUser] = useState(
+        localStorage.getItem('user') ? localStorage.getItem('user') : null
+    )
 
     useEffect(() => {
         if (localStorage.getItem('token')) {
@@ -25,28 +27,39 @@ const UserProvider = ({ history, children, ...props }) => {
         nprogress.done()
     }
 
+    const setCredentials = data => {
+        const userData = data.user
+
+        localStorage.setItem('token', data.token)
+        localStorage.setItem('user', userData.username)
+        setUser(data.user.username)
+        setIsLogged(true)
+
+        redirectHome()
+    }
+
+    const removeCredentials = () => {
+        localStorage.removeItem('token')
+        localStorage.removeItem('user')
+        setUser('')
+        setIsLogged(false)
+
+        redirectHome()
+    }
+
     const register = async ({ email, username, password }) => {
         nprogress.start()
 
         try {
-            const response = await fetch(`${API_ENDPOINT}/auth/register`, {
+            const data = await fetch(`${API_ENDPOINT}/auth/register`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({ email, username, password }),
-            })
-            const data = await response.json()
-            // const userData = JSON.stringify(data.user)
-            const userData = data.user
+            }).then(response => response.json())
 
-            await localStorage.setItem('token', data.token)
-            await localStorage.setItem('user', userData.username)
-
-            // await setIsLogged(true)
-            await setUser(data.user.username)
-
-            await redirectHome()
+            await setCredentials(data)
         } catch (err) {
             console.log(`REGISTRATION ERROR: ${err.message}`)
         }
@@ -58,23 +71,15 @@ const UserProvider = ({ history, children, ...props }) => {
         nprogress.start()
 
         try {
-            const response = await fetch(`${API_ENDPOINT}/auth/login`, {
+            const data = await fetch(`${API_ENDPOINT}/auth/login`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({ username, password }),
-            })
-            const data = await response.json()
-            // const userData = JSON.stringify(data.user)
-            const userData = data.user
+            }).then(response => response.json())
 
-            await localStorage.setItem('token', data.token)
-            await localStorage.setItem('user', userData.username)
-
-            await setUser(data.user.username)
-
-            await redirectHome()
+            await setCredentials(data)
         } catch (err) {
             console.log(`LOGIN ERROR: ${err.message}`)
         }
@@ -94,13 +99,7 @@ const UserProvider = ({ history, children, ...props }) => {
                 body: '',
             })
 
-            await localStorage.removeItem('token')
-            await localStorage.removeItem('user')
-
-            // await setIsLogged(false)
-            await setUser('')
-
-            await redirectHome()
+            removeCredentials()
         } catch (err) {
             console.log(`LOGOUT ERROR: ${err.message}`)
         }

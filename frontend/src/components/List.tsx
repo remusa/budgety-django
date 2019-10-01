@@ -1,8 +1,13 @@
+import styled from '@emotion/styled'
 import PropTypes from 'prop-types'
 import React from 'react'
 
+const TableStyles = styled.table`
+    text-align: center;
+`
+
 interface Item {
-    id: string
+    id: number
     note: string
     category: string
     total: number
@@ -13,17 +18,36 @@ interface Props {
     data: Item[]
 }
 
-const List: React.FC<Props> = ({data}) => {
+const List: React.FC<Props> = ({ data }) => {
     return (
         <div>
             <ul>
                 {data.map(item => (
-                    <div key={item.id}>
-                        <h2>{item.note}</h2>
-                        <p>{item.category}</p>
-                        <p>{item.total}</p>
-                        <p>{item.date}</p>
-                    </div>
+                    <TableStyles>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Concept</th>
+                                <th>
+                                    <abbr title="Category">CAT</abbr>
+                                </th>
+                                <th>Total</th>
+                                <th>Date</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            {data.map(item => (
+                                <tr>
+                                    <th key={item.id}></th>
+                                    <td>{item.note}</td>
+                                    <td>{item.category}</td>
+                                    <td>{item.total}</td>
+                                    <td>{item.date}</td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </TableStyles>
                 ))}
             </ul>
         </div>

@@ -13,6 +13,8 @@ const HeaderStyles = styled.header`
 
 const Header = () => {
     const { isLogged, user, logout } = useAuth()
+    const currentUser = localStorage.getItem('user') ? localStorage.getItem('user') : user
+    // console.log('currentUser', currentUser)
 
     return (
         <HeaderStyles>
