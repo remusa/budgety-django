@@ -1,13 +1,9 @@
 import styled from '@emotion/styled'
 import React from 'react'
-import { Link, Route, Switch } from 'react-router-dom'
 import Footer from './components/Footer'
 import Header from './components/Header'
-import HomePage from './components/screens/HomePage'
-import Login from './components/screens/LoginPage'
-import Register from './components/screens/RegisterPage'
-import * as ROUTES from './constants/routes'
 import './index.scss'
+import Router from './Router'
 
 const AppStyles = styled.div`
     text-align: center;
@@ -24,37 +20,12 @@ const AppStyles = styled.div`
     }
 `
 
-const NotFoundStyles = styled.div`
-    grid-area: main;
-
-    height: 100%;
-    display: flex;
-    flex-flow: column wrap;
-    justify-content: center;
-    align-items: center;
-`
-
-const NotFound: React.FC = () => {
-    return (
-        <NotFoundStyles>
-            <h1>Sorry... nothing here.</h1>
-            <Link to="/">Go home</Link>
-        </NotFoundStyles>
-    )
-}
-
 const App: React.FC = () => {
     return (
         <AppStyles className="App">
             <Header />
 
-            <Switch>
-                <Route path={ROUTES.HOME} exact component={HomePage} />
-                <Route path={ROUTES.LOGIN} exact component={Login} />
-                <Route path={ROUTES.REGISTER} exact component={Register} />
-
-                <Route component={NotFound} />
-            </Switch>
+            <Router />
 
             <Footer />
         </AppStyles>
