@@ -61,8 +61,7 @@ const UserProvider: React.FC<Props> = ({ history, children, ...props }) => {
     }
 
     const removeCredentials = () => {
-        localStorage.removeItem('token')
-        localStorage.removeItem('user')
+        localStorage.clear()
         setUser(null)
 
         redirectHome()
