@@ -11,18 +11,23 @@ const MainStyles = styled.section`
     grid-area: main;
 `
 
-const Main = () => {
-    const [expenses, setExpenses] = useState([])
-    const [incomes, setIncomes] = useState([])
+const Main: React.FC = () => {
+    const [expenses, setExpenses] = useState<any[]>([])
+    const [incomes, setIncomes] = useState<any[]>([])
     const { isLogged } = useAuth()
 
     /* eslint-disable */
     useEffect(() => {
         const fetchData = async () => {
             nprogress.start()
-            setExpenses(await getExpenses())
-            setIncomes(await getIncomes())
-            nprogress.done()
+
+            const exp = await getExpenses()
+            setExpenses(exp)
+
+            const inc = await getIncomes()
+            setIncomes(inc)
+
+            await nprogress.done()
         }
 
         fetchData()
