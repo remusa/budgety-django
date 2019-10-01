@@ -33,16 +33,16 @@ const UserProvider = ({ history, children, ...props }) => {
         localStorage.setItem('token', data.token)
         localStorage.setItem('user', userData.username)
         setUser(data.user.username)
-        setIsLogged(true)
 
         redirectHome()
+
+        nprogress.done()
     }
 
     const removeCredentials = () => {
         localStorage.removeItem('token')
         localStorage.removeItem('user')
-        setUser('')
-        setIsLogged(false)
+        setUser(null)
 
         redirectHome()
     }
@@ -50,60 +50,57 @@ const UserProvider = ({ history, children, ...props }) => {
     const register = async ({ email, username, password }) => {
         nprogress.start()
 
-        try {
-            const data = await fetch(`${API_ENDPOINT}/auth/register`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ email, username, password }),
-            }).then(response => response.json())
+        const data = await fetch(`${API_ENDPOINT}/auth/register`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ email, username, password }),
+        })
+            .then(response => response.json())
+            .catch(err => {
+                console.log(`LOGIN ERROR: ${err.message}`)
+                nprogress.done()
+            })
 
-            await setCredentials(data)
-        } catch (err) {
-            console.log(`REGISTRATION ERROR: ${err.message}`)
-        }
-
-        nprogress.done()
+        await setCredentials(data)
     }
 
     const login = async ({ username, password }) => {
         nprogress.start()
 
-        try {
-            const data = await fetch(`${API_ENDPOINT}/auth/login`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ username, password }),
-            }).then(response => response.json())
+        const data = await fetch(`${API_ENDPOINT}/auth/login`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ username, password }),
+        })
+            .then(response => response.json())
+            .catch(err => {
+                console.log(`LOGIN ERROR: ${err.message}`)
+                nprogress.done()
+            })
 
-            await setCredentials(data)
-        } catch (err) {
-            console.log(`LOGIN ERROR: ${err.message}`)
-        }
-
-        nprogress.done()
+        await setCredentials(data)
     }
 
     const logout = async () => {
         nprogress.start()
 
-        try {
-            await fetch(`${API_ENDPOINT}/auth/logout`, {
+        await fetch(`${API_ENDPOINT}/auth/logout`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: '',
             })
+            .catch(err => {
+                console.log(`LOGOUT ERROR: ${err.message}`)
+                nprogress.done()
+            })
 
-            removeCredentials()
-        } catch (err) {
-            console.log(`LOGOUT ERROR: ${err.message}`)
-        }
-
+        removeCredentials()
         nprogress.done()
     }
 
@@ -117,9 +114,11 @@ const UserProvider = ({ history, children, ...props }) => {
 
 export function useAuth() {
     const context = useContext(AuthContext)
+
     if (context === undefined) {
         throw new Error(`useAuth must be used within a AuthProvider`)
     }
+
     return context
 }
 
