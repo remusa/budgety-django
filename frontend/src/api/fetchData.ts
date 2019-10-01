@@ -1,4 +1,5 @@
-import { API_ENDPOINT } from '../constants/constants'
+import { API_ENDPOINT, API_INCOMES } from '../constants/constants'
+import { API_EXPENSES } from './../constants/constants'
 
 const headers = {
     headers: {
@@ -10,7 +11,7 @@ const headers = {
 const getData = async (endpoint: string) => {
     if (localStorage.getItem('token')) {
         try {
-            const response = await fetch(`${API_ENDPOINT}/${endpoint}`, {
+            const response = await fetch(`${API_ENDPOINT}${endpoint}`, {
                 ...headers,
                 method: 'GET',
             })
@@ -26,7 +27,7 @@ const getData = async (endpoint: string) => {
 const postData = async (endpoint: string) => {
     if (localStorage.getItem('token')) {
         try {
-            const response = await fetch(`${API_ENDPOINT}/${endpoint}`, {
+            const response = await fetch(`${API_ENDPOINT}${endpoint}`, {
                 ...headers,
                 method: 'POST',
             })
@@ -38,7 +39,7 @@ const postData = async (endpoint: string) => {
     }
 }
 
-export const getExpenses = () => getData('expenses')
-export const getIncomes = () => getData('incomes')
-export const postExpense = () => postData('expenses')
-export const postIncome = () => postData('incomes')
+export const getExpenses = () => getData(API_EXPENSES)
+export const getIncomes = () => getData(API_INCOMES)
+export const postExpense = () => postData(API_EXPENSES)
+export const postIncome = () => postData(API_INCOMES)
