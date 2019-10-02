@@ -62,7 +62,7 @@ const FormTransaction: React.FC = () => {
         const dateValue: any = new Date(d)
 
         let res
-        if (transaction.type === "expense") {
+        if (transaction.type === 'expense') {
             res = await postExpense({ ...transaction, date: dateValue })
         } else {
             res = await postIncome({ ...transaction, date: dateValue })
