@@ -15,6 +15,7 @@ const getData = async (endpoint: string) => {
             method: 'GET',
         }).catch(e => {
             console.log(`ERROR: ${e.message}`)
+            return
         })
 
         if (response) {
@@ -33,6 +34,7 @@ const postData = async (endpoint: string, data: object) => {
             body: JSON.stringify(data),
         }).catch(e => {
             console.log(`ERROR: ${e.message}`)
+            return
         })
 
         if (response) {
