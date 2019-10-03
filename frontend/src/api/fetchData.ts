@@ -10,31 +10,34 @@ const headers = {
 
 const getData = async (endpoint: string) => {
     if (localStorage.getItem('token')) {
-        try {
-            const response = await fetch(`${API_ENDPOINT}${endpoint}`, {
-                ...headers,
-                method: 'GET',
-            })
-            const res = await response.json()
-            return res.results
-        } catch (e) {
+        const response = await fetch(`${API_ENDPOINT}/${endpoint}`, {
+            ...headers,
+            method: 'GET',
+        }).catch(e => {
             console.log(`ERROR: ${e.message}`)
+        })
+
+        if (response) {
+            const res = await response.json()
+            console.log('Response:', JSON.stringify(res))
+            return res.results
         }
     }
 }
 
 const postData = async (endpoint: string, data: object) => {
     if (localStorage.getItem('token')) {
-        try {
-            const response = await fetch(`${API_ENDPOINT}${endpoint}`, {
-                ...headers,
-                method: 'POST',
-                body: JSON.stringify(data),
-            })
+        const response: void | Response = await fetch(`${API_ENDPOINT}/${endpoint}`, {
+            ...headers,
+            method: 'POST',
+            body: JSON.stringify(data),
+        }).catch(e => {
+            console.log(`ERROR: ${e.message}`)
+        })
+
+        if (response) {
             const res = await response.json()
             console.log('Response:', JSON.stringify(res))
-        } catch (e) {
-            console.log(`ERROR: ${e.message}`)
         }
     }
 }
