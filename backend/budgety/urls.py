@@ -1,9 +1,9 @@
-from django.urls import include, path
-from rest_framework.urlpatterns import format_suffix_patterns
-from rest_framework.schemas import get_schema_view
-from knox import views as knox_views
-
 from budgety import views
+from django.urls import include, path
+from knox import views as knox_views
+from rest_framework.schemas import get_schema_view
+from rest_framework.urlpatterns import format_suffix_patterns
+
 
 schema_view = get_schema_view(title="Budgety API")
 
@@ -15,6 +15,8 @@ urlpatterns = [
     path("auth/login", views.LoginAPI.as_view()),
     path("auth/user", views.UserAPI.as_view()),
     path("schema/", schema_view),
+    path("category/", views.CategoryList.as_view(), name="category-list"),
+    path("category/<int:pk>", views.CategoryDetail.as_view(), name="category-detail"),
     path("expenses/", views.ExpenseList.as_view(), name="expense-list"),
     path("expenses/<int:pk>", views.ExpenseDetail.as_view(), name="expense-detail"),
     path("incomes/", views.IncomeList.as_view(), name="income-list"),
