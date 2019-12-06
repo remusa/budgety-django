@@ -1,9 +1,17 @@
-from rest_framework import serializers
-from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
+from django.contrib.auth.models import User
+from rest_framework import serializers
 from rest_framework.authtoken.models import Token
 
-from .models import Expense, Income
+from .models import Category, Expense, Income
+
+
+class CategorySerializer(serializers.HyperlinkedModelSerializer):
+    owner = serializers.ReadOnlyField(source="owner.username")
+
+    class Meta:
+        model = Expense
+        fields = ("url", "id", "amount", "category", "note", "date", "created_at", "owner")
 
 
 class ExpenseSerializer(serializers.HyperlinkedModelSerializer):
@@ -11,7 +19,7 @@ class ExpenseSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Expense
-        fields = ("url", "id", "total", "category", "note", "date", "created_at", "owner")
+        fields = ("url", "id", "amount", "category", "note", "date", "created_at", "owner")
 
 
 class IncomeSerializer(serializers.HyperlinkedModelSerializer):
@@ -19,7 +27,7 @@ class IncomeSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Income
-        fields = ("url", "id", "total", "category", "note", "date", "created_at", "owner")
+        fields = ("url", "id", "amount", "category", "note", "date", "created_at", "owner")
 
 
 class UserSerializer(serializers.ModelSerializer):

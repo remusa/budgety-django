@@ -1,21 +1,15 @@
 from django.contrib.auth.models import User
+from knox.models import AuthToken
 from rest_framework import generics, permissions
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.reverse import reverse
-from knox.models import AuthToken
 
-# from rest_framework.authtoken.models import Token
-
-from .models import Expense, Income
+from .models import Category, Expense, Income
 from .permissions import IsOwner
 from .serializers import (
-    ExpenseSerializer,
-    IncomeSerializer,
-    UserSerializer,
-    RegisterSerializer,
-    LoginSerializer,
-)
+    CategorySerializer, ExpenseSerializer, IncomeSerializer, LoginSerializer,
+    RegisterSerializer, UserSerializer)
 
 
 @api_view(["GET"])
@@ -23,10 +17,32 @@ def api_root(request, format=None):
     return Response(
         {
             "users": reverse("user-list", request=request, format=format),
+            "categories": reverse("category-list", request=request, format=format),
             "expenses": reverse("expense-list", request=request, format=format),
             "incomes": reverse("income-list", request=request, format=format),
         }
     )
+
+
+class CategoryList(generics.ListCreateAPIView):
+    serializer_class = CategorySerializer
+    permission_classes = (permissions.IsAuthenticated)
+
+    def get_queryset(self):
+        return self.request.user.expenses.all()
+
+    def perform_create(self, serializer):
+        serializer.save(owner=self.request.user)
+
+
+class CategoryDetail(generics.RetrieveUpdateDestroyAPIView):
+    # queryset = Expense.objects.all()
+    serializer_class = ExpenseSerializer
+    permission_classes = (permissions.IsAuthenticated, IsOwner)
+
+    def get_queryset(self):
+        user = self.request.user
+        return Expense.objects.filter(owner=user)
 
 
 class ExpenseList(generics.ListCreateAPIView):
